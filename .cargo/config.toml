@@ -1,0 +1,2 @@
+[env]
+HDF5_DIR = "/usr/local/opt/hdf5"

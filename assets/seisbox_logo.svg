@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Background gradient (dark) -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a2742"/>
+      <stop offset="100%" stop-color="#0d1424"/>
+    </radialGradient>
+
+    <!-- Globe gradient -->
+    <radialGradient id="globeGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#2a4a7f"/>
+      <stop offset="100%" stop-color="#0e2244"/>
+    </radialGradient>
+
+    <!-- Waveform glow filter -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip to circle -->
+    <clipPath id="circleClip">
+      <circle cx="100" cy="100" r="78"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer ring shadow -->
+  <circle cx="100" cy="100" r="92" fill="none" stroke="#0a1020" stroke-width="4" opacity="0.6"/>
+
+  <!-- Main background circle -->
+  <circle cx="100" cy="100" r="90" fill="url(#bgGrad)"/>
+
+  <!-- Outer accent ring -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#2a5fa8" stroke-width="1.5" opacity="0.8"/>
+  <circle cx="100" cy="100" r="87" fill="none" stroke="#1a3a6a" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- ===== GLOBE ===== -->
+  <g clip-path="url(#circleClip)">
+    <!-- Globe body -->
+    <circle cx="100" cy="108" r="55" fill="url(#globeGrad)" opacity="0.9"/>
+
+    <!-- Latitude lines -->
+    <ellipse cx="100" cy="108" rx="55" ry="12" fill="none" stroke="#3a6ab0" stroke-width="0.6" opacity="0.5"/>
+    <ellipse cx="100" cy="93" rx="47" ry="10" fill="none" stroke="#3a6ab0" stroke-width="0.6" opacity="0.4"/>
+    <ellipse cx="100" cy="123" rx="47" ry="10" fill="none" stroke="#3a6ab0" stroke-width="0.6" opacity="0.4"/>
+
+    <!-- Longitude line (vertical) -->
+    <path d="M100,53 Q112,80 112,108 Q112,136 100,163" fill="none" stroke="#3a6ab0" stroke-width="0.6" opacity="0.5"/>
+    <path d="M100,53 Q88,80 88,108 Q88,136 100,163" fill="none" stroke="#3a6ab0" stroke-width="0.6" opacity="0.5"/>
+
+    <!-- Continents (simplified blobs) -->
+    <path d="M78,88 Q82,80 90,82 Q96,79 98,85 Q100,90 95,94 Q88,98 82,95 Z" fill="#2e5c3a" opacity="0.85"/>
+    <path d="M102,88 Q108,82 116,84 Q122,82 124,88 Q126,95 120,98 Q112,100 106,97 Z" fill="#2e5c3a" opacity="0.85"/>
+    <path d="M84,102 Q88,98 94,100 Q98,104 96,110 Q92,114 86,112 Z" fill="#2e5c3a" opacity="0.75"/>
+
+    <!-- Globe rim highlight -->
+    <circle cx="100" cy="108" r="55" fill="none" stroke="#5a8bd0" stroke-width="1" opacity="0.4"/>
+    <path d="M60,85 Q75,65 110,70" fill="none" stroke="white" stroke-width="1.5" opacity="0.12"/>
+  </g>
+
+  <!-- ===== SEISMIC WAVEFORM (main feature) ===== -->
+  <!-- Shadow/glow waveform -->
+  <path d="M22,80 L38,80 L42,80 L46,58 L50,102 L54,60 L58,100 L62,80 L66,80 L70,50 L74,110 L78,80 L82,80" 
+        fill="none" stroke="#1a6abf" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+
+  <!-- Main waveform (P-wave and S-wave pattern) -->
+  <path d="M22,80 L38,80 L42,80 L46,58 L50,102 L54,60 L58,100 L62,80 L66,80 L70,50 L74,110 L78,80 L82,80" 
+        fill="none" stroke="#4da6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+        filter="url(#glow)" opacity="0.95"/>
+
+  <!-- P arrival marker -->
+  <line x1="43" y1="68" x2="43" y2="92" stroke="#ff6b35" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.9"/>
+  <text x="45" y="67" fill="#ff6b35" font-size="6" font-family="sans-serif" font-weight="bold" opacity="0.95">P</text>
+
+  <!-- S arrival marker -->
+  <line x1="67" y1="60" x2="67" y2="100" stroke="#ffd700" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.9"/>
+  <text x="69" y="59" fill="#ffd700" font-size="6" font-family="sans-serif" font-weight="bold" opacity="0.95">S</text>
+
+  <!-- Horizontal baseline -->
+  <line x1="22" y1="80" x2="85" y2="80" stroke="#2a5fa8" stroke-width="0.6" opacity="0.6"/>
+
+  <!-- ===== TEXT ===== -->
+  <!-- "SEIS" -->
+  <text x="100" y="58" 
+        font-family="'Arial', 'Helvetica', sans-serif" 
+        font-size="20" 
+        font-weight="900"
+        fill="#4da6ff"
+        text-anchor="middle"
+        letter-spacing="2"
+        filter="url(#glow)">SEIS</text>
+
+  <!-- "BOX" -->
+  <text x="100" y="78" 
+        font-family="'Arial', 'Helvetica', sans-serif" 
+        font-size="20" 
+        font-weight="900"
+        fill="#ffffff"
+        text-anchor="middle"
+        letter-spacing="2">BOX</text>
+
+  <!-- Tagline -->
+  <text x="100" y="175" 
+        font-family="'Arial', 'Helvetica', sans-serif" 
+        font-size="7" 
+        font-weight="400"
+        fill="#5a8bd0"
+        text-anchor="middle"
+        letter-spacing="1.5">SEISMIC ANALYSIS TOOLKIT</text>
+
+  <!-- Small decorative dots (seismic stations) -->
+  <circle cx="100" cy="92" r="2.5" fill="#ff6b35" opacity="0.85"/>
+  <circle cx="118" cy="97" r="1.8" fill="#4da6ff" opacity="0.7"/>
+  <circle cx="84" cy="100" r="1.8" fill="#4da6ff" opacity="0.7"/>
+
+  <!-- Station lines -->
+  <line x1="100" y1="92" x2="118" y2="97" stroke="#3a6ab0" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.5"/>
+  <line x1="100" y1="92" x2="84" y2="100" stroke="#3a6ab0" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.5"/>
+
+  <!-- Corner tick marks (scientific feel) -->
+  <line x1="22" y1="22" x2="30" y2="22" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="22" y1="22" x2="22" y2="30" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="178" y1="22" x2="170" y2="22" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="178" y1="22" x2="178" y2="30" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="22" y1="178" x2="30" y2="178" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="22" y1="178" x2="22" y2="170" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="178" y1="178" x2="170" y2="178" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+  <line x1="178" y1="178" x2="178" y2="170" stroke="#2a5fa8" stroke-width="1" opacity="0.5"/>
+</svg>

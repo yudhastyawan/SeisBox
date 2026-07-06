@@ -1,0 +1,84 @@
+SeisBox Custom Non-Commercial License
+Version 1.0, 2026
+
+Copyright (c) 2026 Yudha Styawan. All Rights Reserved.
+
+================================================================================
+TERMS AND CONDITIONS
+================================================================================
+
+1. GRANT OF LICENSE
+
+   Subject to the terms and conditions of this License, the copyright holder
+   ("Author") hereby grants you a limited, non-exclusive, non-transferable,
+   royalty-free license to use this software ("SeisBox") solely for personal,
+   academic, research, and other non-commercial purposes.
+
+2. PERMITTED USES
+
+   You may:
+   a. Run and use the Software for personal, academic, or research purposes.
+   b. Share unmodified copies of the Software with others, provided that this
+      License file and all copyright notices are included in full.
+   c. Reference the Software in academic publications, provided appropriate
+      attribution is given.
+
+3. RESTRICTIONS
+
+   You may NOT, without the prior written permission of the Author:
+
+   a. USE COMMERCIALLY: Use the Software, in whole or in part, for any
+      commercial purpose, including but not limited to, incorporation into a
+      commercial product or service, or use in a commercial workflow that
+      generates revenue.
+
+   b. MODIFY OR CREATE DERIVATIVE WORKS: Alter, transform, adapt, translate,
+      reverse-engineer, decompile, disassemble, or create derivative works
+      based upon the Software or its source code.
+
+   c. REDISTRIBUTE MODIFIED VERSIONS: Distribute, sublicense, or publish
+      modified versions of the Software.
+
+   d. CLAIM OWNERSHIP: Represent or claim the Software, in whole or in part,
+      as your own original creation, remove or alter any copyright notices,
+      author attributions, or proprietary markings.
+
+   e. SUBSTITUTE OR INTEGRATE: Incorporate the Software, or any portion
+      thereof, into another software product, system, or toolkit — whether
+      proprietary or open-source — without explicit written consent from the
+      Author.
+
+4. ATTRIBUTION
+
+   Any permitted redistribution of the unmodified Software must retain:
+   - This License file in its entirety.
+   - All original copyright notices and author attributions.
+
+5. COMMERCIAL LICENSING
+
+   If you wish to use the Software for commercial purposes, integrate it into
+   another product, or require rights not granted by this License, you must
+   obtain explicit written permission from the Author. For licensing
+   inquiries, please contact the Author through the project's GitHub page.
+
+6. DISCLAIMER OF WARRANTIES
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
+   FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+   DEALINGS IN THE SOFTWARE.
+
+7. TERMINATION
+
+   This License is effective until terminated. Your rights under this License
+   will terminate automatically and without notice if you fail to comply with
+   any term(s) of this License. Upon termination, you must cease all use of
+   the Software and destroy all copies in your possession or control.
+
+================================================================================
+
+For permissions beyond the scope of this license, contact:
+  Yudha Styawan — https://github.com/yudhastyawan/SeisBox

@@ -1,0 +1,33 @@
+[package]
+name = "seisbox"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eframe = "0.31"
+egui_plot = "0.31"
+egui_extras = "0.31"
+rfd = "0.15"
+serde = { version = "1", features = ["derive"] }
+sacio = "0.1.0"
+miniseed-rs = "0.2.1"
+rustfft = "6.4.1"
+sci-rs = "0.4.1"
+image = "0.24"
+chrono = "0.4.45"
+shapefile = "0.8.0"
+reqwest = { version = "0.13.4", features = ["blocking"] }
+csv = "1.4.0"
+plotters = "0.3.5"
+rand = "0.8.5"
+rand_distr = "0.4.3"
+serde_json = "1.0.150"
+tempfile = "3.27.0"
+kiddo = "5.3.2"
+statrs = "0.18.0"
+rayon = "1.12.0"
+npyz = "0.9.1"
+zip = "8.6.0"
+
+[profile.dev]
+overflow-checks = false
