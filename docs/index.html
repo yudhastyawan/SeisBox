@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeisBox — Seismic Analysis Toolkit</title>
+  <meta name="description" content="SeisBox is a modern, native macOS desktop application for seismic data analysis, built with Rust. Download, visualize, pick phases, compute HVSR, Coulomb stress, and more." />
+  <link rel="icon" href="assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="assets/seisbox_icon.svg" alt="SeisBox icon" width="32" height="32" />
+        <span>SeisBox</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#docs">Docs</a></li>
+        <li><a href="https://github.com/yudhastyawan/SeisBox" target="_blank" class="btn-ghost">GitHub ↗</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">v0.1.0 — Now Available</div>
+      <h1>Seismic Analysis<br /><span class="gradient-text">In One Box.</span></h1>
+      <p class="hero-sub">
+        SeisBox is a fast, native macOS desktop application for seismic data analysis.
+        Load waveforms, pick phases, compute HVSR, model Coulomb stress, and explore earthquake catalogs — all in one place.
+      </p>
+      <div class="hero-actions">
+        <a id="btn-download" href="https://github.com/yudhastyawan/SeisBox/releases/latest" class="btn-primary">
+          ⬇ Download for macOS
+        </a>
+        <a href="https://github.com/yudhastyawan/SeisBox" class="btn-secondary" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+      <p class="hero-note">macOS 10.11+ · Apple Silicon &amp; Intel · Free for non-commercial use</p>
+    </div>
+    <div class="hero-visual">
+      <div class="app-window">
+        <div class="window-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="window-title">SeisBox</span>
+        </div>
+        <div class="window-body">
+          <div class="waveform-demo" aria-hidden="true">
+            <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+              <line x1="0" y1="100" x2="800" y2="100" stroke="#1e3a5f" stroke-width="1"/>
+              <!-- Trace 1 -->
+              <path class="trace t1" d="M0,100 Q40,100 80,100 Q120,100 160,98 Q170,92 180,86 Q185,80 190,74 Q195,60 200,52 Q205,40 210,50 Q215,65 220,75 Q225,85 230,90 Q240,95 260,97 Q300,98 340,100 Q380,100 420,100 Q440,98 460,90 Q470,75 480,55 Q485,35 490,20 Q495,0 500,15 Q505,35 510,60 Q515,78 520,90 Q530,97 560,99 Q600,100 640,100 Q680,100 720,100 Q760,100 800,100" stroke="#38bdf8" stroke-width="2.5" fill="none"/>
+              <!-- Trace 2 -->
+              <path class="trace t2" d="M0,100 Q60,100 120,100 Q160,100 180,99 Q195,96 205,88 Q215,75 225,62 Q230,48 235,38 Q240,25 245,35 Q250,55 255,72 Q260,85 265,93 Q275,98 310,100 Q400,100 440,100 Q460,97 475,88 Q485,72 495,50 Q500,30 505,12 Q510,-5 515,12 Q520,38 525,65 Q530,83 535,94 Q545,99 580,100 Q650,100 800,100" stroke="#34d399" stroke-width="2.5" fill="none" opacity="0.8"/>
+              <!-- Markers -->
+              <line x1="195" y1="20" x2="195" y2="130" stroke="#fb923c" stroke-width="1.5" stroke-dasharray="4,3"/>
+              <text x="198" y="28" fill="#fb923c" font-size="12" font-family="JetBrains Mono">P</text>
+              <line x1="490" y1="5" x2="490" y2="130" stroke="#facc15" stroke-width="1.5" stroke-dasharray="4,3"/>
+              <text x="493" y="13" fill="#facc15" font-size="12" font-family="JetBrains Mono">S</text>
+            </svg>
+          </div>
+          <div class="window-panel">
+            <div class="panel-item active">📂 Waveform Viewer</div>
+            <div class="panel-item">📈 HVSR Analysis</div>
+            <div class="panel-item">🌍 Spatial Analysis</div>
+            <div class="panel-item">🔢 Coulomb Stress</div>
+            <div class="panel-item">🔬 RJ-MCMC Inversion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Everything you need for seismic analysis</h2>
+        <p>A comprehensive toolkit designed for researchers and practitioners.</p>
+      </div>
+      <div class="feature-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">🌊</div>
+          <h3>Waveform Viewer</h3>
+          <p>Load and visualize SAC and MiniSEED seismic waveforms with interactive zoom and multi-trace display.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📌</div>
+          <h3>Phase Picking</h3>
+          <p>Interactively pick P- and S-wave arrivals directly on seismograms with precision tools.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>HVSR Analysis</h3>
+          <p>Compute Horizontal-to-Vertical Spectral Ratios (HVSR) with full SESAME criteria evaluation.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔬</div>
+          <h3>RJ-MCMC Inversion</h3>
+          <p>Bayesian Reversible-Jump MCMC inversion for S-wave velocity structure from HVSR curves.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Coulomb Stress</h3>
+          <p>Compute Coulomb Failure Stress changes using the Okada dislocation model with fault optimization.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🗺️</div>
+          <h3>Spatial Analysis</h3>
+          <p>Map-based earthquake catalog visualization with cross-section tools and magnitude-time plots.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>ISC Catalog Search</h3>
+          <p>Download and filter earthquake catalogs directly from the International Seismological Centre.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📡</div>
+          <h3>FDSN Downloader</h3>
+          <p>Download seismic waveforms from any FDSN-compliant web service with station and channel filters.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔷</div>
+          <h3>BVor Analysis</h3>
+          <p>Bayesian Voronoi spatial analysis for detecting seismicity rate changes in time and space.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INSTALL ===== -->
+  <section id="install">
+    <div class="container">
+      <div class="section-header">
+        <h2>Get Started</h2>
+        <p>Up and running in under a minute.</p>
+      </div>
+      <div class="install-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Download</h3>
+            <p>Get the latest <code>SeisBox_macOS.zip</code> from the GitHub Releases page.</p>
+            <a href="https://github.com/yudhastyawan/SeisBox/releases/latest" class="btn-primary btn-sm" target="_blank">⬇ Latest Release</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Extract &amp; Fix Permissions</h3>
+            <p>Extract the zip. Then <strong>double-click <code>Fix_App_First.command</code></strong> to remove the macOS quarantine flag (required once).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Launch SeisBox</h3>
+            <p>Double-click <code>SeisBox.app</code> and start analyzing your seismic data!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="build-block">
+        <h3>Build from Source</h3>
+        <pre><code>git clone git@github.com:yudhastyawan/SeisBox.git
+cd SeisBox
+chmod +x compile_dist.sh
+./compile_dist.sh</code></pre>
+        <p>Requires <a href="https://rustup.rs" target="_blank">Rust 1.70+</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DOCS QUICK LINKS ===== -->
+  <section id="docs">
+    <div class="container">
+      <div class="section-header">
+        <h2>Documentation</h2>
+        <p>Guides and references to get the most out of SeisBox.</p>
+      </div>
+      <div class="doc-grid">
+        <a href="docs/waveform.html" class="doc-card">
+          <span class="doc-icon">🌊</span>
+          <h3>Waveform Viewer</h3>
+          <p>Loading SAC and MiniSEED files, filtering, and navigation.</p>
+        </a>
+        <a href="docs/hvsr.html" class="doc-card">
+          <span class="doc-icon">📊</span>
+          <h3>HVSR Analysis</h3>
+          <p>Window selection, processing parameters, and SESAME evaluation.</p>
+        </a>
+        <a href="docs/coulomb.html" class="doc-card">
+          <span class="doc-icon">⚡</span>
+          <h3>Coulomb Stress</h3>
+          <p>Setting up source faults, receiver faults, and interpreting results.</p>
+        </a>
+        <a href="docs/isc.html" class="doc-card">
+          <span class="doc-icon">🌐</span>
+          <h3>ISC Catalog Search</h3>
+          <p>Downloading and filtering earthquake catalogs from the ISC.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <img src="assets/seisbox_icon.svg" alt="SeisBox" width="28" />
+        <span>SeisBox</span>
+      </div>
+      <p class="footer-text">
+        Built with ❤️ and Rust by <a href="https://github.com/yudhastyawan" target="_blank">Yudha Styawan</a>.<br/>
+        Licensed for non-commercial use. See <a href="https://github.com/yudhastyawan/SeisBox/blob/main/LICENSE" target="_blank">LICENSE</a>.
+      </p>
+      <div class="footer-links">
+        <a href="https://github.com/yudhastyawan/SeisBox" target="_blank">GitHub</a>
+        <a href="https://github.com/yudhastyawan/SeisBox/releases" target="_blank">Releases</a>
+        <a href="https://github.com/yudhastyawan/SeisBox/issues" target="_blank">Issues</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+# This file signals to GitHub Pages that this folder is the source for the site.
+# Configure GitHub Pages to serve from the /docs folder on the main branch.
+# Go to: Repository Settings → Pages → Source → Branch: main, Folder: /docs
