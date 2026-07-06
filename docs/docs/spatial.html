@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spatial Analysis — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html">Waveform Viewer</a></li>
+        <li><a href="hvsr.html">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html">Coulomb Stress</a></li>
+        <li><a href="bvor.html">BVor Analysis</a></li>
+        <li><a href="isc.html">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html">FDSN Downloader</a></li>
+        <li><a href="spatial.html" class="active">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>Spatial Analysis</span></div>
+    <h1>Spatial Analysis</h1>
+    <p class="lead">Map-based earthquake catalog visualization with cross-section projection, magnitude-time plots, and tectonic plate boundary overlay.</p>
+
+    <h2>Overview</h2>
+    <p>The Spatial Analysis view is integrated within the ISC Catalog Search window. It provides a geographic map of the loaded earthquake catalog with tools for filtering, cross-section profiling, and statistical visualization.</p>
+    <div class="callout callout-info"><p>Access from: <strong>Catalog → ISC Catalog Search</strong>. The map is the right panel of the combined ISC/Spatial window.</p></div>
+
+    <h2>Map Display</h2>
+    <p>Events are plotted as circles on the map. The map includes:</p>
+    <ul>
+      <li><strong>Coastlines:</strong> Natural Earth 110m land polygons (bundled with the application — no internet required for the base map).</li>
+      <li><strong>Tectonic Plate Boundaries:</strong> PB2002 plate boundary dataset (Bird, 2003) displayed as red/orange lines.</li>
+      <li><strong>Earthquake Events:</strong> Circles sized proportionally to magnitude and colored by depth.</li>
+    </ul>
+
+    <h3>Map Interaction Modes</h3>
+    <ul>
+      <li><strong>Default (Pan &amp; Zoom):</strong> Scroll to zoom, click-drag to pan.</li>
+      <li><strong>Draw BBox:</strong> Click "Draw BBox" to enter bounding box draw mode for the ISC search area. Click and drag to define the rectangle, then release.</li>
+      <li><strong>Cross-Section Line:</strong> Click "Draw Profile" to draw a cross-section line. Click two points on the map to define the profile start and end.</li>
+    </ul>
+
+    <h2>Magnitude-Time Plot</h2>
+    <p>Below the map, a magnitude vs. time scatter plot is displayed for all loaded events. This allows quick visual inspection of:</p>
+    <ul>
+      <li>Temporal clustering of seismicity (aftershock sequences)</li>
+      <li>Completeness of the catalog (minimum detectable magnitude over time)</li>
+      <li>Main shock and aftershock relationships</li>
+    </ul>
+
+    <h2>Cross-Section Analysis</h2>
+    <p>Define a profile line on the map to project earthquake hypocenters onto a vertical cross-section plane. This is useful for:</p>
+    <ul>
+      <li>Visualizing the geometry of a fault plane in depth</li>
+      <li>Identifying seismically active structures and their dip angles</li>
+      <li>Differentiating crustal from mantle seismicity</li>
+    </ul>
+    <p>The cross-section plot shows distance along the profile (horizontal axis) vs. depth (vertical axis, increasing downward). Events within a defined corridor width of the profile line are projected perpendicularly onto the section plane.</p>
+
+    <h3>Cross-Section Parameters</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Profile Start / End</td><td>Two points defining the section line on the map (set by clicking in Draw Profile mode).</td></tr>
+        <tr><td>Corridor Width (km)</td><td>Events within this perpendicular distance from the profile line are included in the cross-section.</td></tr>
+        <tr><td>Max Depth (km)</td><td>Depth range displayed on the cross-section.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Filtering Events</h2>
+    <p>The event list can be filtered using the search/filter controls in the left panel:</p>
+    <ul>
+      <li>Magnitude range (Min/Max Mag)</li>
+      <li>Depth range (Min/Max Depth)</li>
+      <li>Date/time range</li>
+      <li>Geographic bounding box (from map selection)</li>
+    </ul>
+    <p>Filtered events are immediately reflected in all views (map, magnitude-time plot, cross-section).</p>
+
+    <h2>Exporting</h2>
+    <ul>
+      <li><strong>CSV:</strong> Export the current filtered event list as a CSV file for use in other tools.</li>
+      <li><strong>Processed CSV:</strong> Saves a cleaned version of the ISC catalog with standardized column names.</li>
+      <li><strong>Map as Image:</strong> Right-click the map and select "Save as PNG" to export the current map view.</li>
+    </ul>
+
+    <h2>Integration with Other Modules</h2>
+    <p>Events loaded in this window are shared with:</p>
+    <ul>
+      <li><strong>BVor Analysis:</strong> Uses the spatial event list for b-value mapping.</li>
+      <li><strong>Coulomb Stress (Batch):</strong> Export the catalog to use individual focal mechanisms as receiver faults.</li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>

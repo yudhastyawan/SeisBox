@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BVor Analysis — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html">Waveform Viewer</a></li>
+        <li><a href="hvsr.html">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html">Coulomb Stress</a></li>
+        <li><a href="bvor.html" class="active">BVor Analysis</a></li>
+        <li><a href="isc.html">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html">FDSN Downloader</a></li>
+        <li><a href="spatial.html">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>BVor Analysis</span></div>
+    <h1>BVor — Bayesian Voronoi Analysis</h1>
+    <p class="lead">Detect spatial or temporal changes in seismicity rates (b-value) using a transdimensional Bayesian Voronoi tessellation framework.</p>
+
+    <h2>Overview</h2>
+    <p>The BVor module implements a Bayesian non-parametric method for mapping the Gutenberg-Richter b-value across space (latitude-longitude) or time-depth domains, using a Voronoi tessellation that adapts to the data distribution. The number of Voronoi cells (nodes) is treated as an unknown and estimated from the data, avoiding overfitting.</p>
+    <div class="callout callout-info"><p>Access from: <strong>Analysis → B-Value Voronoi Analysis</strong></p></div>
+
+    <h2>Analysis Modes</h2>
+    <ul>
+      <li><strong>Spatial:</strong> Maps b-value as a function of geographic location (longitude, latitude). Reveals spatial heterogeneity in seismic hazard or fault complexity.</li>
+      <li><strong>Temporal:</strong> Maps b-value as a function of normalized time and depth. Reveals temporal evolution of seismicity (e.g., b-value changes before/after a mainshock).</li>
+    </ul>
+
+    <h2>Input Data</h2>
+    <p>You can provide data in two ways:</p>
+    <ul>
+      <li><strong>From CSV file:</strong> Load any earthquake catalog CSV with columns for <code>lon</code>, <code>lat</code>, <code>mag</code>, <code>depth</code>, and a <code>time</code>/<code>date</code> column (RFC3339 format recommended).</li>
+      <li><strong>From active Spatial Map:</strong> Leave the CSV field empty to use the earthquake events currently loaded in the ISC Catalog Search / Spatial Analysis window.</li>
+    </ul>
+
+    <h2>Parameters</h2>
+
+    <h3>Voronoi Node Configuration</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>N Nodes Min</td><td>2</td><td>Minimum number of Voronoi cells explored. Must be ≥ 2.</td></tr>
+        <tr><td>N Nodes Max</td><td>60</td><td>Maximum number of Voronoi cells. Larger values allow more spatial detail but increase computation time.</td></tr>
+        <tr><td>Grid Resolution</td><td>200</td><td>Size of the output interpolation grid (200 = 200×200 pixels). Higher values give smoother output maps but take longer.</td></tr>
+        <tr><td>Min Obs/Cell</td><td>5</td><td>Minimum number of earthquakes required in a Voronoi cell for b-value estimation. Cells with fewer events are excluded.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Initialization Methods (Realizations per N)</h3>
+    <p>For each number of nodes N in [N_min, N_max], the algorithm runs multiple Voronoi realizations initialized using different strategies. The best-fitting realization (by BIC) is selected.</p>
+    <table class="param-table">
+      <thead><tr><th>Method</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Sobol</td><td>30</td><td>Quasi-random Sobol sequence initial node placement — good coverage of the domain.</td></tr>
+        <tr><td>Uniform</td><td>30</td><td>Uniformly random node placement.</td></tr>
+        <tr><td>Data</td><td>30</td><td>Nodes placed at random data points — naturally clusters where seismicity is dense.</td></tr>
+        <tr><td>KDE</td><td>30</td><td>Nodes sampled from a Kernel Density Estimate of the data distribution — more focused in high-density regions.</td></tr>
+        <tr><td>K-Means</td><td>1</td><td>K-means clustering of data points for initial node placement (deterministic, only 1 realization needed).</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Computational Resources</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>CPU Cores</td><td>Number of parallel threads used. Defaults to the number of logical CPU cores available. All node counts are evaluated in parallel.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Running the Analysis</h2>
+    <ol class="step-list">
+      <li><strong>Select Mode</strong><p>Choose Spatial or Temporal depending on your research question.</p></li>
+      <li><strong>Load Data</strong><p>Browse to a catalog CSV or ensure events are loaded in the Spatial Map.</p></li>
+      <li><strong>Set Output File</strong><p>Choose a <code>.npz</code> output file path (NumPy archive format).</p></li>
+      <li><strong>Click "Run B-Value Analysis"</strong><p>The progress bar and log panel on the right show real-time progress across all N-node configurations.</p></li>
+      <li><strong>Visualize</strong><p>Click <strong>"Visualize Results"</strong> to open the BVor visualization window.</p></li>
+    </ol>
+    <div class="callout callout-tip"><p>The total realizations = (N_max − N_min + 1) × sum(init_methods). For default settings: 59 × 121 ≈ 7,139 Voronoi tessellations evaluated. Use fewer realizations per method or a smaller N range for faster exploratory runs.</p></div>
+
+    <h2>Visualization</h2>
+    <p>After loading the <code>.npz</code> output in the Visualization window, you can inspect:</p>
+    <ul>
+      <li><strong>b-value map:</strong> Color-coded spatial/temporal distribution of the Gutenberg-Richter b-value.</li>
+      <li><strong>BIC curve:</strong> Bayesian Information Criterion vs. number of nodes — the optimal model corresponds to the BIC minimum.</li>
+      <li><strong>Error/uncertainty map:</strong> Spatial distribution of b-value estimation uncertainty.</li>
+    </ul>
+
+    <h2>Output File Format</h2>
+    <p>The <code>.npz</code> output is a NumPy archive file readable in Python:</p>
+    <pre><code>import numpy as np
+data = np.load("bvalue.npz")
+print(list(data.keys()))  # e.g. ['b_grid', 'x_grid', 'y_grid', 'bic', ...]</code></pre>
+  </main>
+</div>
+</body>
+</html>

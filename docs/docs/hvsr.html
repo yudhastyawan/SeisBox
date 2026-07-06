@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HVSR Analysis — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Getting Started</h4>
+      <ul class="sidebar-nav"><li><a href="../index.html#install">Installation</a></li></ul>
+    </div>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html">Waveform Viewer</a></li>
+        <li><a href="hvsr.html" class="active">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html">Coulomb Stress</a></li>
+        <li><a href="bvor.html">BVor Analysis</a></li>
+        <li><a href="isc.html">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html">FDSN Downloader</a></li>
+        <li><a href="spatial.html">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>HVSR Analysis</span></div>
+    <h1>HVSR Microtremor Analysis</h1>
+    <p class="lead">Compute the Horizontal-to-Vertical Spectral Ratio (HVSR) from three-component ambient noise records following the SESAME 2004 guidelines.</p>
+
+    <h2>Overview</h2>
+    <p>HVSR (also called H/V ratio or Nakamura method) is a widely used technique for estimating the fundamental resonance frequency (f<sub>0</sub>) of soft-soil sites and inferring shallow velocity structure. SeisBox implements the full SESAME-compliant processing pipeline: windowing → anti-trigger screening (STA/LTA) → FFT → Konno-Ohmachi smoothing → spectral ratio computation → iterative f<sub>0</sub> filtering → SESAME criteria evaluation.</p>
+
+    <h2>Prerequisites</h2>
+    <p>Before opening the HVSR window, load your three-component waveforms (Z, N/1, E/2) through the Waveform Viewer. SeisBox automatically detects and assigns components based on channel codes (e.g., <code>BHZ</code>, <code>BHN</code>, <code>BHE</code>). Linear trend removal (detrending) is applied automatically.</p>
+    <div class="callout callout-info"><p>Access HVSR Analysis from: <strong>Analysis → HVSR Microtremor Analysis</strong></p></div>
+
+    <h2>Processing Workflow</h2>
+    <ol class="step-list">
+      <li><strong>Set Parameters</strong><p>Configure all parameters in the left panel (see tables below).</p></li>
+      <li><strong>Preview Windows (Step 1)</strong><p>Click <strong>"1. Preview Windows (STA/LTA)"</strong> to segment the record and visualize which time windows pass the anti-trigger filter. Valid windows are shown in green, rejected ones in red on the time-domain plot. You can click on any window in the plot to manually toggle its valid/invalid status.</p></li>
+      <li><strong>Process HVSR (Step 2)</strong><p>Click <strong>"2. Process HVSR"</strong> to run the full processing pipeline in a background thread. A progress bar shows completion. Results appear as three sub-plots (Stages 1–3) once done.</p></li>
+      <li><strong>Inspect Results</strong><p>Review the SESAME criteria panel and the three-stage HVSR curve plots (Raw → STA/LTA filtered → f0 filtered).</p></li>
+      <li><strong>Export</strong><p>Click <strong>"💾 Export CSV"</strong> to save the HVSR curve (Frequency, Mean_HV, Std_Dev_Plus, Std_Dev_Minus).</p></li>
+    </ol>
+
+    <h2>Parameters</h2>
+
+    <h3>Windowing &amp; Tapering</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Window Length (s)</td><td>20</td><td>Length of each time window in seconds. Longer windows give better frequency resolution at low frequencies. SESAME recommends at least 10× the longest period of interest.</td></tr>
+        <tr><td>Overlap (%)</td><td>50</td><td>Overlap between consecutive windows. 0–90%. Higher overlap increases the number of windows (reduces variance) but introduces correlation.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anti-Trigger (STA/LTA)</h3>
+    <p>Windows contaminated by transient noise (vehicles, footsteps, wind gusts) are rejected using the Short-Term Average / Long-Term Average (STA/LTA) ratio computed on the Z component.</p>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>STA Length (s)</td><td>1.0</td><td>Duration of the short-time averaging window.</td></tr>
+        <tr><td>LTA Length (s)</td><td>30.0</td><td>Duration of the long-time averaging window.</td></tr>
+        <tr><td>Threshold T1 (Lower)</td><td>0.1</td><td>Windows where <em>any sample</em> has STA/LTA &lt; T1 are rejected (stationary requirement).</td></tr>
+        <tr><td>Threshold T2 (Upper)</td><td>3.0</td><td>Windows where <em>any sample</em> has STA/LTA &gt; T2 are rejected (transient rejection).</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip"><p>A good starting point for urban environments: STA=1s, LTA=30s, T1=0.1, T2=2.5. For very noisy sites, relax T2 to 3.0–5.0.</p></div>
+
+    <h3>Smoothing &amp; Frequency</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Konno-Ohmachi (b)</td><td>40</td><td>Smoothing bandwidth coefficient. Higher values = narrower smoothing. SESAME recommends b=40. Typical range: 10–100.</td></tr>
+        <tr><td>Min Frequency (Hz)</td><td>0.5</td><td>Minimum frequency displayed and used in SESAME criteria.</td></tr>
+        <tr><td>Max Frequency (Hz)</td><td>20.0</td><td>Maximum frequency.</td></tr>
+        <tr><td>Sample Count</td><td>200</td><td>Number of logarithmically spaced frequency points between Min and Max.</td></tr>
+        <tr><td>Horizontal Combine</td><td>Geometric Mean</td><td>Method to combine N and E spectral amplitudes before dividing by Z. Options: Geometric Mean, Quadratic Mean (RMS), Arithmetic Mean, Maximum.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>f0 Iterative Filter</h3>
+    <p>After STA/LTA screening, an optional second-pass filter removes windows whose individual peak frequency (f<sub>0</sub>) deviates too far from the ensemble mean.</p>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Enable Iterative f0 Filter</td><td>Off</td><td>Enable to activate the second filtering stage. Recommended for sites with multi-modal H/V curves or strong local interference.</td></tr>
+        <tr><td>Multiplier (n)</td><td>1.5</td><td>Windows whose f<sub>0</sub> falls outside [mean − n·σ, mean + n·σ] are rejected. Smaller n = stricter filtering.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Result Plots</h2>
+    <p>After processing, three HVSR curve stages are displayed stacked vertically:</p>
+    <ul>
+      <li><strong>Stage 1: Raw (All Windows)</strong> — HVSR from all windows without filtering.</li>
+      <li><strong>Stage 2: STA/LTA Filtered</strong> — Only windows that passed the anti-trigger check.</li>
+      <li><strong>Stage 3: f0 Filtered</strong> — (if enabled) Windows further filtered by f<sub>0</sub> consistency.</li>
+    </ul>
+    <p>In each plot: thin grey lines = individual window HVSR curves; thick blue line = mean HVSR; dashed blue = ±1σ; red diamond + dashed line = peak frequency f<sub>0</sub>; green lines = mean f<sub>0</sub> ± σ.</p>
+
+    <h2>SESAME Criteria</h2>
+    <p>SeisBox evaluates the official SESAME 2004 reliability and clear-peak criteria automatically and displays a pass/fail (✅/❌) summary for all 9 conditions:</p>
+
+    <h3>Reliability Criteria (3)</h3>
+    <ul>
+      <li><strong>C1:</strong> f<sub>0</sub> &gt; 10 / l<sub>w</sub> (f<sub>0</sub> must be resolved by the window length)</li>
+      <li><strong>C2:</strong> n<sub>c</sub>(f<sub>0</sub>) &gt; 200 (sufficient cycles of the fundamental frequency)</li>
+      <li><strong>C3:</strong> σ<sub>A</sub>(f) &lt; threshold for 50% of the frequency range</li>
+    </ul>
+
+    <h3>Clear Peak Criteria (6)</h3>
+    <ul>
+      <li><strong>C1:</strong> There exists f<sup>−</sup> ∈ [f<sub>0</sub>/4, f<sub>0</sub>] with A(f<sup>−</sup>) &lt; A<sub>0</sub>/2</li>
+      <li><strong>C2:</strong> There exists f<sup>+</sup> ∈ [f<sub>0</sub>, 4f<sub>0</sub>] with A(f<sup>+</sup>) &lt; A<sub>0</sub>/2</li>
+      <li><strong>C3:</strong> A<sub>0</sub> &gt; 2 (peak amplitude at least 2)</li>
+      <li><strong>C4:</strong> f<sub>0</sub> peaks from individual windows within ±5% of mean f<sub>0</sub></li>
+      <li><strong>C5:</strong> σ<sub>f</sub> &lt; ε(f<sub>0</sub>)</li>
+      <li><strong>C6:</strong> σ<sub>A</sub>(f<sub>0</sub>) &lt; θ(f<sub>0</sub>)</li>
+    </ul>
+    <p>A minimum of 5 out of 6 clear-peak criteria must pass for the curve to be considered a reliable peak.</p>
+
+    <h2>Export Format</h2>
+    <p>The exported CSV has four columns:</p>
+    <pre><code>Frequency,Mean_HV,Std_Dev_Plus,Std_Dev_Minus
+0.5000,1.2341,1.5102,0.9871
+...</code></pre>
+  </main>
+</div>
+</body>
+</html>
