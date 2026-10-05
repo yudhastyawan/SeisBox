@@ -340,6 +340,7 @@ fn show_explorer(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
                 state.z_comp_plot = None;
                 state.n_comp_plot = None;
                 state.e_comp_plot = None;
+                state.trim_lengths = false;
                 
                 for path_str in &state.selected_files {
                     let path = std::path::PathBuf::from(path_str);
@@ -491,6 +492,7 @@ fn show_process(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
                 ui.label(format!("N: {} samples", n_len));
                 ui.label(format!("E: {} samples", e_len));
                 if ui.button("✂️ Trim to Minimum Length").clicked() {
+                    state.trim_lengths = true;
                     let min_len = z_len.min(n_len).min(e_len);
                     state.z_comp.truncate(min_len);
                     state.n_comp.truncate(min_len);
@@ -804,6 +806,12 @@ fn show_process(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
                                 
                                 // Print Parameters
                                 csv_content.push_str("# --- PROCESSING PARAMETERS ---\n");
+                                if state.trim_lengths {
+                                    csv_content.push_str("# Lengths Trimmed\tYes\n");
+                                }
+                                if state.apply_bandpass {
+                                    csv_content.push_str(&format!("# Bandpass Filter\t{:.2} - {:.2} Hz (Butterworth 4th-order)\n", state.bp_fmin, state.bp_fmax));
+                                }
                                 csv_content.push_str(&format!("# Window Length (s)\t{:.2}\n", state.params.window_len_s));
                                 csv_content.push_str(&format!("# Overlap (%)\t{:.2}\n", state.params.overlap_pct));
                                 csv_content.push_str(&format!("# STA Length (s)\t{:.2}\n", state.params.sta_len_s));

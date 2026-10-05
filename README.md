@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgrey?logo=apple" />
   <img src="https://img.shields.io/badge/language-Rust-orange?logo=rust" />
   <img src="https://img.shields.io/badge/license-Non--Commercial-blue" />
-  <img src="https://img.shields.io/badge/version-0.1.0-green" />
+  <img src="https://img.shields.io/badge/version-0.1.1-green" />
   <img src="https://img.shields.io/github/downloads/yudhastyawan/SeisBox/total?color=blueviolet" alt="Downloads" />
 </p>
 

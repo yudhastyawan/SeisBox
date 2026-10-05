@@ -49,9 +49,9 @@ create_app_bundle() {
     <key>CFBundleIconFile</key>
     <string>seisbox.icns</string>
     <key>CFBundleVersion</key>
-    <string>0.1.0</string>
+    <string>0.1.1</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.1.0</string>
+    <string>0.1.1</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.11</string>
 </dict>

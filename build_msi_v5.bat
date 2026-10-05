@@ -34,7 +34,7 @@ echo.
 
 rem ---- Configuration ----
 set PRODUCT_NAME=SeisBox
-set PRODUCT_VERSION=0.1.0
+set PRODUCT_VERSION=0.1.1
 set MANUFACTURER=Yudha Styawan
 set UPGRADE_GUID=7B2E8F4A-1C3D-4E5F-A6B7-8C9D0E1F2A3B
 set WXS_FILE=seisbox_installer.wxs
