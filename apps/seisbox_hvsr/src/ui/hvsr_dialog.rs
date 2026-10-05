@@ -63,6 +63,12 @@ pub struct HvsrDialogState {
     pub enable_hvtfa: bool,
     pub hvtfa_m: f64,
     
+    // Optional Preprocessing
+    pub apply_bandpass: bool,
+    pub bp_fmin: f64,
+    pub bp_fmax: f64,
+    pub trim_lengths: bool,
+    
     // Threading
     pub is_processing: bool,
     pub progress_msg: String,
@@ -97,6 +103,11 @@ impl Default for HvsrDialogState {
             params: HvsrParams::default(),
             enable_hvtfa: false,
             hvtfa_m: 1.0,
+            
+            apply_bandpass: false,
+            bp_fmin: 0.1,
+            bp_fmax: 50.0,
+            trim_lengths: false,
             
             is_processing: false,
             progress_msg: "Ready.".to_string(),
@@ -467,6 +478,48 @@ fn show_process(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
     ui.separator();
     
     egui::ScrollArea::vertical().id_salt("hvsr_process_scroll").show(ui, |ui| {
+        let z_len = state.z_comp.len();
+        let n_len = state.n_comp.len();
+        let e_len = state.e_comp.len();
+        let has_data = z_len > 0 && n_len > 0 && e_len > 0;
+        let lengths_mismatch = has_data && (z_len != n_len || z_len != e_len);
+        
+        if lengths_mismatch {
+            ui.group(|ui| {
+                ui.label(egui::RichText::new("⚠️ Warning: Data Lengths Mismatch").color(egui::Color32::RED).strong());
+                ui.label(format!("Z: {} samples", z_len));
+                ui.label(format!("N: {} samples", n_len));
+                ui.label(format!("E: {} samples", e_len));
+                if ui.button("✂️ Trim to Minimum Length").clicked() {
+                    let min_len = z_len.min(n_len).min(e_len);
+                    state.z_comp.truncate(min_len);
+                    state.n_comp.truncate(min_len);
+                    state.e_comp.truncate(min_len);
+                    
+                    // Note: This truncates the plot data safely without re-decimating for simplicity.
+                    if let Some(p) = state.z_comp_plot.as_mut() { p.retain(|d| d[0] <= min_len as f64 * state.dt); }
+                    if let Some(p) = state.n_comp_plot.as_mut() { p.retain(|d| d[0] <= min_len as f64 * state.dt); }
+                    if let Some(p) = state.e_comp_plot.as_mut() { p.retain(|d| d[0] <= min_len as f64 * state.dt); }
+                }
+            });
+            ui.add_space(5.0);
+        }
+
+        egui::CollapsingHeader::new("Data Preprocessing").default_open(true).show(ui, |ui| {
+            ui.checkbox(&mut state.apply_bandpass, "Apply Bandpass Filter before Windowing");
+            if state.apply_bandpass {
+                egui::Grid::new("hvsr_preprocess_params").num_columns(2).show(ui, |ui| {
+                    ui.label("Min Frequency (Hz)");
+                    ui.add(egui::DragValue::new(&mut state.bp_fmin).speed(0.1).range(0.01..=50.0));
+                    ui.end_row();
+                    
+                    ui.label("Max Frequency (Hz)");
+                    ui.add(egui::DragValue::new(&mut state.bp_fmax).speed(0.5).range(1.0..=100.0));
+                    ui.end_row();
+                });
+            }
+        });
+        ui.add_space(5.0);
         egui::CollapsingHeader::new("Windowing & Tapering").default_open(true).show(ui, |ui| {
             egui::Grid::new("hvsr_win_params").num_columns(2).show(ui, |ui| {
                 ui.label("Window Length (s)");
@@ -573,7 +626,34 @@ fn show_process(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
         
         if ui.button(egui::RichText::new("1. Preview Windows (STA/LTA)").size(16.0).strong()).clicked() {
             if !state.z_comp.is_empty() && !state.n_comp.is_empty() && !state.e_comp.is_empty() {
-                match crate::core::math_hvsr::compute_windows(&state.z_comp, &state.n_comp, &state.e_comp, state.dt, &state.params) {
+                let mut z_c = state.z_comp.clone();
+                let mut n_c = state.n_comp.clone();
+                let mut e_c = state.e_comp.clone();
+                let dt_c = state.dt;
+                
+                let mut z_p = state.z_comp_plot.clone();
+                let mut n_p = state.n_comp_plot.clone();
+                let mut e_p = state.e_comp_plot.clone();
+                
+                if state.apply_bandpass {
+                    let sr = 1.0 / dt_c;
+                    let nyq = sr / 2.0;
+                    let low = state.bp_fmin.min(nyq - 0.2).max(0.001);
+                    let high = state.bp_fmax.min(nyq - 0.1).max(low + 0.1);
+                    z_c = seisbox_core::core::filter::apply_bandpass(&z_c, sr, low, high, 4);
+                    n_c = seisbox_core::core::filter::apply_bandpass(&n_c, sr, low, high, 4);
+                    e_c = seisbox_core::core::filter::apply_bandpass(&e_c, sr, low, high, 4);
+                    
+                    let z_t: Vec<f64> = (0..z_c.len()).map(|i| i as f64 * dt_c).collect();
+                    let n_t: Vec<f64> = (0..n_c.len()).map(|i| i as f64 * dt_c).collect();
+                    let e_t: Vec<f64> = (0..e_c.len()).map(|i| i as f64 * dt_c).collect();
+                    
+                    z_p = seisbox_core::ui::plot::decimate_for_plot(&z_t, &z_c);
+                    n_p = seisbox_core::ui::plot::decimate_for_plot(&n_t, &n_c);
+                    e_p = seisbox_core::ui::plot::decimate_for_plot(&e_t, &e_c);
+                }
+                
+                match crate::core::math_hvsr::compute_windows(&z_c, &n_c, &e_c, state.dt, &state.params) {
                     Ok(windows) => {
                         state.windows = Some(windows.clone());
                         state.progress_msg = "Windows computed".to_string();
@@ -582,9 +662,9 @@ fn show_process(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
                             hvsr_result: None,
                             hvtfa_result: None,
                             hvsr_windows: Some(windows),
-                            z_comp_plot: state.z_comp_plot.clone(),
-                            n_comp_plot: state.n_comp_plot.clone(),
-                            e_comp_plot: state.e_comp_plot.clone(),
+                            z_comp_plot: z_p,
+                            n_comp_plot: n_p,
+                            e_comp_plot: e_p,
                             dt: state.dt,
                             active_curve_view: 0,
                         y_axis_log: false,
@@ -627,10 +707,20 @@ fn show_process(ui: &mut egui::Ui, state: &mut HvsrDialogState) {
                 state.progress_pct = 0.0;
                 state.progress_msg = "Starting...".to_string();
                 
-                let z_c = state.z_comp.clone();
-                let n_c = state.n_comp.clone();
-                let e_c = state.e_comp.clone();
+                let mut z_c = state.z_comp.clone();
+                let mut n_c = state.n_comp.clone();
+                let mut e_c = state.e_comp.clone();
                 let dt_c = state.dt;
+                
+                if state.apply_bandpass {
+                    let sr = 1.0 / dt_c;
+                    let nyq = sr / 2.0;
+                    let low = state.bp_fmin.min(nyq - 0.2).max(0.001);
+                    let high = state.bp_fmax.min(nyq - 0.1).max(low + 0.1);
+                    z_c = seisbox_core::core::filter::apply_bandpass(&z_c, sr, low, high, 4);
+                    n_c = seisbox_core::core::filter::apply_bandpass(&n_c, sr, low, high, 4);
+                    e_c = seisbox_core::core::filter::apply_bandpass(&e_c, sr, low, high, 4);
+                }
                 
                 if state.enable_hvtfa {
                     let freq_min = state.params.freq_min;
