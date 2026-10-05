@@ -1,0 +1,297 @@
+warning: unused import: `std::f64::consts::PI`
+ --> core/seisbox_core/src/core/interpolation.rs:3:5
+  |
+3 | use std::f64::consts::PI;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `chrono::Datelike`
+  --> core/seisbox_core/src/core/isc_client.rs:55:13
+   |
+55 |         use chrono::Datelike;
+   |             ^^^^^^^^^^^^^^^^
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:411:28
+    |
+411 |                     .width(1.2);
+    |                            ^^^ help: explicitly specify the type as `f32`: `1.2_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+    = note: `#[warn(float_literal_f32_fallback)]` (part of `#[warn(future_incompatible)]`) on by default
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:433:32
+    |
+433 |                         .width(2.0);
+    |                                ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:465:40
+    |
+465 | ...                   .width(1.0);
+    |                              ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:495:39
+    |
+495 | ...:new(0.8, egui::Color32::from_rgba_premultiplied(180, 180, 180, 80)),
+    |         ^^^ help: explicitly specify the type as `f32`: `0.8_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:143:47
+    |
+143 | ...:new(1.0, Color32::from_rgb(100, 150, 100)))
+    |         ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:151:47
+    |
+151 | ...:new(1.5, Color32::from_rgb(200, 80, 80)))
+    |         ^^^ help: explicitly specify the type as `f32`: `1.5_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:161:29
+    |
+161 |                     .radius(3.0)
+    |                             ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:176:47
+    |
+176 |                     .stroke(egui::Stroke::new(2.0, Color32::CYAN))
+    |                                               ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:186:46
+    |
+186 |                 ])).stroke(egui::Stroke::new(3.0, theme_color))
+    |                                              ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:193:90
+    |
+193 | ...dius(5.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:197:92
+    |
+197 | ...dius(5.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:201:90
+    |
+201 | ...dius(5.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:218:55
+    |
+218 | ...                   .stroke(egui::Stroke::new(1.0, Color32::CYAN))
+    |                                                 ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:226:91
+    |
+226 | ...:new(2.0, theme_color)));
+    |         ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: value assigned to `inside_data` is never read
+   --> core/seisbox_core/src/core/isc_client.rs:201:17
+    |
+201 |                 inside_data = false;
+    |                 ^^^^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `duration`
+   --> core/seisbox_core/src/io/file_sync.rs:342:9
+    |
+342 |     let duration = seis.time.last().copied().unwrap_or(0.0);
+    |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_duration`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable `subplot_idx` is assigned to, but never used
+   --> core/seisbox_core/src/io/export_image.rs:104:9
+    |
+104 |     let mut subplot_idx = 0;
+    |         ^^^^^^^^^^^^^^^
+    |
+    = note: consider using `_subplot_idx` instead
+
+warning: value assigned to `subplot_idx` is never read
+   --> core/seisbox_core/src/io/export_image.rs:168:17
+    |
+168 |                 subplot_idx += 1;
+    |                 ^^^^^^^^^^^^^^^^ this value is reassigned later and never used
+...
+303 |         subplot_idx += 1;
+    |         ---------------- `subplot_idx` is overwritten here before the previous value is read
+
+warning: value assigned to `subplot_idx` is never read
+   --> core/seisbox_core/src/io/export_image.rs:303:9
+    |
+303 |         subplot_idx += 1;
+    |         ^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: variable does not need to be mutable
+   --> core/seisbox_core/src/ui/plot.rs:207:13
+    |
+207 |         let mut plot_height = if n == 0 {
+    |             ----^^^^^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `TRACE_COLORS` is never used
+ --> core/seisbox_core/src/io/export_image.rs:7:7
+  |
+7 | const TRACE_COLORS: &[(u8, u8, u8)] = &[
+  |       ^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `seisbox_core` (lib) generated 23 warnings (run `cargo fix --lib -p seisbox_core` to apply 18 suggestions)
+warning: unused imports: `Ui` and `Window`
+ --> apps/seisbox_isc/src/ui/spatial_dialog.rs:2:29
+  |
+2 | use eframe::egui::{Color32, Ui, Window};
+  |                             ^^  ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `fetch_isc_catalog`
+ --> apps/seisbox_isc/src/ui/spatial_dialog.rs:7:55
+  |
+7 | ...client::{IscSearchParams, fetch_isc_catalog, IscResult};
+  |                              ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `show_map`
+ --> apps/seisbox_isc/src/ui/spatial_dialog.rs:9:37
+  |
+9 | use seisbox_core::ui::spatial_map::{show_map, MapInteractionMode};
+  |                                     ^^^^^^^^
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_isc/src/ui/spatial_dialog.rs:447:87
+    |
+447 | ...dius(3.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+    = note: `#[warn(float_literal_f32_fallback)]` (part of `#[warn(future_incompatible)]`) on by default
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_isc/src/ui/spatial_dialog.rs:471:97
+    |
+471 | ...dius(3.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: variable does not need to be mutable
+   --> apps/seisbox_isc/src/ui/spatial_dialog.rs:433:25
+    |
+433 |                     let mut plot = Plot::new("mag_time_plot")
+    |                         ----^^^^
+    |                         |
+    |                         help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> apps/seisbox_isc/src/ui/spatial_dialog.rs:454:25
+    |
+454 |                     let mut plot = Plot::new("cross_section_plot")
+    |                         ----^^^^
+    |                         |
+    |                         help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> apps/seisbox_isc/src/ui/spatial_dialog.rs:93:9
+   |
+93 |     let mut is_open = app.is_open;
+   |         ----^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> apps/seisbox_isc/src/ui/spatial_dialog.rs:96:13
+   |
+96 |         let mut is_settings_open = app.show_conversion_settings;
+   |             ----^^^^^^^^^^^^^^^^
+   |             |
+   |             help: remove this `mut`
+
+warning: `seisbox_isc` (bin "seisbox_isc") generated 9 warnings (run `cargo fix --bin "seisbox_isc" -p seisbox_isc` to apply 9 suggestions)
+    Finished `release` profile [optimized] target(s) in 1.22s
+     Running `/Volumes/Yudha_SSD/code_apps_archives/antigravity/SeisPick/target/release/seisbox_isc --start-date 2014-01-01 --end-date 2015-01-01 --min-lat -6.0 --max-lat 6.0 --min-lon 95.0 --max-lon 105.0 --min-mag 3.0 --output sumatra_raw.csv`
+Starting ISC Catalog download (Headless Mode)...
+Area: Lon [95.00, 105.00], Lat [-6.00, 6.00]
+Time: 2014-01-01 00:00:00 to 2015-01-01 23:59:59
+[Progress] Downloading: 2014-01-01 to 2014-01-31
+[Progress] Downloading: 2014-02-01 to 2014-03-03
+[Progress] Downloading: 2014-03-04 to 2014-04-03
+[Progress] Downloading: 2014-04-04 to 2014-05-04
+[Progress] Downloading: 2014-05-05 to 2014-06-04
+[Progress] Downloading: 2014-06-05 to 2014-07-05
+[Progress] Downloading: 2014-07-06 to 2014-08-05
+[Progress] Downloading: 2014-08-06 to 2014-09-05
+[Progress] Downloading: 2014-09-06 to 2014-10-06
+[Progress] Downloading: 2014-10-07 to 2014-11-06
+[Progress] Downloading: 2014-11-07 to 2014-12-07
+[Progress] Downloading: 2014-12-08 to 2015-01-01
+Successfully downloaded 705 events.
+Saving Processed CSV to sumatra_raw.csv ...
+Saved 705 valid processed rows to CSV.
+All tasks completed successfully.

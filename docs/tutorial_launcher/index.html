@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Launcher Hub - SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .doc-content { padding: 40px 20px; max-width: 900px; margin: 0 auto; color: var(--text); }
+    .doc-content h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--text-strong); }
+    .doc-content h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 15px; color: var(--text-strong); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .doc-content p { line-height: 1.7; margin-bottom: 20px; font-size: 1.05rem; }
+    .doc-content img { max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); margin: 20px 0; border: 1px solid var(--border); }
+    .back-link { display: inline-block; margin-top: 20px; margin-bottom: 20px; color: var(--accent); text-decoration: none; font-weight: 500; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/seisbox_icon.svg" alt="SeisBox icon" width="32" height="32" />
+        <span>SeisBox</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html#docs" class="btn-ghost">← Back to Docs</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="doc-content">
+    <a href="../index.html#docs" class="back-link">← Back to Home</a>
+    
+    <h1>🚀 Launcher Hub</h1>
+    <p>The **SeisBox Launcher Hub** is the central dashboard and entry point for the entire SeisBox suite. It provides a unified, elegant interface to easily discover and launch any of the 8 specialized geophysical modules without using the command line.</p>
+    
+    <h2>1. Main Dashboard</h2>
+    <p>When you start SeisBox, you are greeted with the Main Dashboard. From here, you can see all available applications at a glance. Each card represents a unique tool tailored for a specific seismological workflow.</p>
+    <img src="../assets/images/gui/launcher_main_dashboard.png" alt="Launcher Main Dashboard" />
+    <p>To start an application, simply click the <strong>Launch</strong> button on the corresponding card. If an application is already running, the button will intelligently indicate its status to prevent accidental duplicate sessions.</p>
+
+    <h2>Available Modules</h2>
+    <ul>
+      <li><strong>Phase Picker:</strong> Main seismogram viewer and phase picking.</li>
+      <li><strong>Statistical Seismology:</strong> B-Value, completeness magnitude, and Voronoi tessellation.</li>
+      <li><strong>HVSR Analysis:</strong> Microtremor analysis with SESAME criteria.</li>
+      <li><strong>Velocity Inversion:</strong> 1D Vs structure inversion using multiple algorithms (RJ-MCMC, PSO, LM, Occam).</li>
+      <li><strong>Coulomb Stress:</strong> Coulomb stress change mapping and cross-sections.</li>
+      <li><strong>XYZ Interpolator:</strong> Spatial grid interpolation tools.</li>
+      <li><strong>FDSN Downloader:</strong> Interactive waveform fetching.</li>
+      <li><strong>ISC Catalog:</strong> Interactive earthquake catalog search.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">Built with ❤️ and Rust by Yudha Styawan.</p>
+    </div>
+  </footer>
+</body>
+</html>

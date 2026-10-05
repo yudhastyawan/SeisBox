@@ -1,0 +1,529 @@
+warning: unused import: `std::f64::consts::PI`
+ --> core/seisbox_core/src/core/interpolation.rs:3:5
+  |
+3 | use std::f64::consts::PI;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `chrono::Datelike`
+  --> core/seisbox_core/src/core/isc_client.rs:55:13
+   |
+55 |         use chrono::Datelike;
+   |             ^^^^^^^^^^^^^^^^
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:411:28
+    |
+411 |                     .width(1.2);
+    |                            ^^^ help: explicitly specify the type as `f32`: `1.2_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+    = note: `#[warn(float_literal_f32_fallback)]` (part of `#[warn(future_incompatible)]`) on by default
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:433:32
+    |
+433 |                         .width(2.0);
+    |                                ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:465:40
+    |
+465 | ...                   .width(1.0);
+    |                              ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/plot.rs:495:39
+    |
+495 | ...:new(0.8, egui::Color32::from_rgba_premultiplied(180, 180, 180, 80)),
+    |         ^^^ help: explicitly specify the type as `f32`: `0.8_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:143:47
+    |
+143 | ...:new(1.0, Color32::from_rgb(100, 150, 100)))
+    |         ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:151:47
+    |
+151 | ...:new(1.5, Color32::from_rgb(200, 80, 80)))
+    |         ^^^ help: explicitly specify the type as `f32`: `1.5_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:161:29
+    |
+161 |                     .radius(3.0)
+    |                             ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:176:47
+    |
+176 |                     .stroke(egui::Stroke::new(2.0, Color32::CYAN))
+    |                                               ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:186:46
+    |
+186 |                 ])).stroke(egui::Stroke::new(3.0, theme_color))
+    |                                              ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:193:90
+    |
+193 | ...dius(5.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:197:92
+    |
+197 | ...dius(5.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:201:90
+    |
+201 | ...dius(5.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:218:55
+    |
+218 | ...                   .stroke(egui::Stroke::new(1.0, Color32::CYAN))
+    |                                                 ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> core/seisbox_core/src/ui/spatial_map.rs:226:91
+    |
+226 | ...:new(2.0, theme_color)));
+    |         ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: value assigned to `inside_data` is never read
+   --> core/seisbox_core/src/core/isc_client.rs:201:17
+    |
+201 |                 inside_data = false;
+    |                 ^^^^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `duration`
+   --> core/seisbox_core/src/io/file_sync.rs:342:9
+    |
+342 |     let duration = seis.time.last().copied().unwrap_or(0.0);
+    |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_duration`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable `subplot_idx` is assigned to, but never used
+   --> core/seisbox_core/src/io/export_image.rs:104:9
+    |
+104 |     let mut subplot_idx = 0;
+    |         ^^^^^^^^^^^^^^^
+    |
+    = note: consider using `_subplot_idx` instead
+
+warning: value assigned to `subplot_idx` is never read
+   --> core/seisbox_core/src/io/export_image.rs:168:17
+    |
+168 |                 subplot_idx += 1;
+    |                 ^^^^^^^^^^^^^^^^ this value is reassigned later and never used
+...
+303 |         subplot_idx += 1;
+    |         ---------------- `subplot_idx` is overwritten here before the previous value is read
+
+warning: value assigned to `subplot_idx` is never read
+   --> core/seisbox_core/src/io/export_image.rs:303:9
+    |
+303 |         subplot_idx += 1;
+    |         ^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: variable does not need to be mutable
+   --> core/seisbox_core/src/ui/plot.rs:207:13
+    |
+207 |         let mut plot_height = if n == 0 {
+    |             ----^^^^^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `TRACE_COLORS` is never used
+ --> core/seisbox_core/src/io/export_image.rs:7:7
+  |
+7 | const TRACE_COLORS: &[(u8, u8, u8)] = &[
+  |       ^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `seisbox_core` (lib) generated 23 warnings (run `cargo fix --lib -p seisbox_core` to apply 18 suggestions)
+warning: unused import: `calculate_bic_grouped`
+ --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:4:49
+  |
+4 | use crate::core::bvor_vis_data::{load_bvor_npz, calculate_bic_grouped, BV...
+  |                                                 ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::path::PathBuf`
+ --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:5:5
+  |
+5 | use std::path::PathBuf;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `VoronoiResult`
+ --> apps/seisbox_stats/src/core/bvor_runner.rs:1:30
+  |
+1 | use super::bvor::{b_voronoi, VoronoiResult};
+  |                              ^^^^^^^^^^^^^
+
+warning: unused import: `std::fs::File`
+ --> apps/seisbox_stats/src/core/bvor_runner.rs:5:5
+  |
+5 | use std::fs::File;
+  |     ^^^^^^^^^^^^^
+
+warning: unused import: `npyz::NpyFile`
+ --> apps/seisbox_stats/src/core/bvor_vis_data.rs:1:5
+  |
+1 | use npyz::NpyFile;
+  |     ^^^^^^^^^^^^^
+
+warning: unused import: `zip::ZipArchive`
+ --> apps/seisbox_stats/src/core/bvor_vis_data.rs:4:5
+  |
+4 | use zip::ZipArchive;
+  |     ^^^^^^^^^^^^^^^
+
+warning: unused import: `std::collections::HashMap`
+ --> apps/seisbox_stats/src/core/bvor_vis_data.rs:5:5
+  |
+5 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `BvalueResult`
+ --> apps/seisbox_stats/src/core/bvalue_timeseries.rs:2:75
+  |
+2 | ... mc_gft, mc_emr, bvalue_mle, BvalueResult};
+  |                                 ^^^^^^^^^^^^
+
+warning: unused import: `BVorMode`
+ --> apps/seisbox_stats/src/main.rs:7:35
+  |
+7 | use ui::bvor_dialog::{BVorDialog, BVorMode};
+  |                                   ^^^^^^^^
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:180:97
+    |
+180 | ...idth(1.0));
+    |         ^^^ help: explicitly specify the type as `f32`: `1.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+    = note: `#[warn(float_literal_f32_fallback)]` (part of `#[warn(future_incompatible)]`) on by default
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:184:97
+    |
+184 | ...idth(1.5));
+    |         ^^^ help: explicitly specify the type as `f32`: `1.5_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:254:71
+    |
+254 | ...                   .color(Color32::BLACK).radius(2.0));
+    |                                                     ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:428:107
+    |
+428 | ...dius(3.0).shape(egui_plot::MarkerShape::Cross));
+    |         ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:435:105
+    |
+435 | ...idth(1.5));
+    |         ^^^ help: explicitly specify the type as `f32`: `1.5_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:461:72
+    |
+461 | ...dius(2.0).name("All Models"));
+    |         ^^^ help: explicitly specify the type as `f32`: `2.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:463:66
+    |
+463 | ...dius(3.0).name("Best Models"));
+    |         ^^^ help: explicitly specify the type as `f32`: `3.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:468:144
+    |
+468 | ...idth(1.5));
+    |         ^^^ help: explicitly specify the type as `f32`: `1.5_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:472:58
+    |
+472 | ...                   .color(color).radius(4.0).name("Mean ± Std Dev"));
+    |                                            ^^^ help: explicitly specify the type as `f32`: `4.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: falling back to `f32` as the trait bound `f32: From<f64>` is not satisfied
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:476:69
+    |
+476 | ...dius(5.0).name("Selected Model"));
+    |         ^^^ help: explicitly specify the type as `f32`: `5.0_f32`
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #154024 <https://github.com/rust-lang/rust/issues/154024>
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+  --> apps/seisbox_stats/src/io/plot_stats.rs:97:64
+   |
+97 | ....events.iter().map(|e| e.time.timestamp()).collect();
+   |                                  ^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+   --> apps/seisbox_stats/src/io/plot_stats.rs:133:50
+    |
+133 |     let min_t = cat.events.iter().map(|e| e.time.timestamp()).min().unw...
+    |                                                  ^^^^^^^^^
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+   --> apps/seisbox_stats/src/io/plot_stats.rs:134:50
+    |
+134 |     let max_t = cat.events.iter().map(|e| e.time.timestamp()).max().unw...
+    |                                                  ^^^^^^^^^
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+   --> apps/seisbox_stats/src/io/plot_stats.rs:150:55
+    |
+150 | ...   cat.events.iter().map(|e| Circle::new((e.time.timestamp(), e.mag)...
+    |                                                     ^^^^^^^^^
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+   --> apps/seisbox_stats/src/io/plot_stats.rs:213:50
+    |
+213 |     let min_t = cat.events.iter().map(|e| e.time.timestamp()).min().unw...
+    |                                                  ^^^^^^^^^
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+   --> apps/seisbox_stats/src/io/plot_stats.rs:214:50
+    |
+214 |     let max_t = cat.events.iter().map(|e| e.time.timestamp()).max().unw...
+    |                                                  ^^^^^^^^^
+
+warning: use of deprecated method `chrono::NaiveDateTime::timestamp`: use `.and_utc().timestamp()` instead
+   --> apps/seisbox_stats/src/io/plot_stats.rs:223:25
+    |
+223 |         let b = (e.time.timestamp() - min_t) / bin_secs;
+    |                         ^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> apps/seisbox_stats/src/ui/bvor_dialog.rs:72:9
+   |
+72 |     let mut is_running = state.bvor_dialog.is_running;
+   |         ----^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `min_mag`
+   --> apps/seisbox_stats/src/core/bvor.rs:142:9
+    |
+142 |     let min_mag = magnitudes.iter().copied().fold(f64::INFINITY, f64::m...
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_min_mag`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `max_mag`
+   --> apps/seisbox_stats/src/core/bvor.rs:143:9
+    |
+143 |     let max_mag = magnitudes.iter().copied().fold(f64::NEG_INFINITY, f6...
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_max_mag`
+
+warning: variable does not need to be mutable
+   --> apps/seisbox_stats/src/core/bvor_runner.rs:103:9
+    |
+103 |     let mut zip = zip::ZipWriter::new(file);
+    |         ----^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: unused variable: `num_n_nodes`
+   --> apps/seisbox_stats/src/core/bvor_vis_data.rs:132:9
+    |
+132 |     let num_n_nodes = data.n_nodes.len();
+    |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_num_n_nodes`
+
+warning: unused variable: `n_total`
+  --> apps/seisbox_stats/src/core/gutenberg_richter.rs:85:9
+   |
+85 |     let n_total = mags.len() as f64;
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_n_total`
+
+warning: associated items `new` and `magnitudes` are never used
+   --> apps/seisbox_stats/src/core/catalogue.rs:23:12
+    |
+ 22 | impl Catalogue {
+    | -------------- associated items in this implementation
+ 23 |     pub fn new() -> Self {
+    |            ^^^
+...
+216 |     pub fn magnitudes(&self) -> Vec<f64> {
+    |            ^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `d_unc`, `r_min`, and `r_max` are never read
+ --> apps/seisbox_stats/src/core/fractal.rs:7:9
+  |
+5 | pub struct FractalResult {
+  |            ------------- fields in this struct
+6 |     pub d_value: f64,
+7 |     pub d_unc: f64,
+  |         ^^^^^
+8 |     pub r_min: f64,
+  |         ^^^^^
+9 |     pub r_max: f64,
+  |         ^^^^^
+  |
+  = note: `FractalResult` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `b_unc` is never read
+  --> apps/seisbox_stats/src/core/grid_engine.rs:12:9
+   |
+ 6 | pub struct GridNodeResult {
+   |            -------------- field in this struct
+...
+12 |     pub b_unc: f64,
+   |         ^^^^^
+   |
+   = note: `GridNodeResult` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: function `calculate_zvalue` is never used
+ --> apps/seisbox_stats/src/core/zvalue.rs:9:8
+  |
+9 | pub fn calculate_zvalue(
+  |        ^^^^^^^^^^^^^^^^
+
+warning: fields `n_events` and `radius_km` are never read
+   --> apps/seisbox_stats/src/io/plot_stats.rs:298:5
+    |
+294 | struct GridRow {
+    |        ------- fields in this struct
+...
+298 |     n_events: usize,
+    |     ^^^^^^^^
+299 |     radius_km: f64,
+    |     ^^^^^^^^^
+    |
+    = note: `GridRow` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variable `_lnLs` should have a snake case name
+   --> apps/seisbox_stats/src/ui/bvor_vis_dialog.rs:494:22
+    |
+494 | ...eld, _lnLs) = crate::core::bvor_vis_data::calculate_bic_grouped(&dat...
+    |         ^^^^^ help: convert the identifier to snake case: `_ln_ls`
+    |
+    = note: `#[warn(non_snake_case)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: variable `lnL_vor_all` should have a snake case name
+   --> apps/seisbox_stats/src/core/bvor_runner.rs:124:21
+    |
+124 |             let mut lnL_vor_all = Vec::with_capacity(n_nodes.len() * ma...
+    |                     ^^^^^^^^^^^ help: convert the identifier to snake case: `ln_l_vor_all`
+
+warning: variable `N_vor_all` should have a snake case name
+   --> apps/seisbox_stats/src/core/bvor_runner.rs:125:21
+    |
+125 |             let mut N_vor_all = Vec::with_capacity(n_nodes.len() * max_j);
+    |                     ^^^^^^^^^ help: convert the identifier to snake case: `n_vor_all`
+
+warning: `seisbox_stats` (bin "seisbox_stats") generated 40 warnings (run `cargo fix --bin "seisbox_stats" -p seisbox_stats` to apply 25 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.43s
+     Running `/Volumes/Yudha_SSD/code_apps_archives/antigravity/SeisPick/target/release/seisbox_stats grid --input sumatra_raw.csv --method constant-r --radius-km 50.0 --min-events 10 --param zvalue --z-tw1 2014-01-01/2014-06-01 --z-tw2 2014-06-02/2015-01-01 --grid-inc 0.1 --slab-file ../../Slab/sum_slab2_dep_02.23.18.xyz --slab-buffer 20.0 --tiff --output zvalue_grid.csv`
+SeisBox Stats — Spatial Gridding
+=================================
+Loading slab geometry from "../../Slab/sum_slab2_dep_02.23.18.xyz"...
+Loaded 115512 valid slab nodes. Filtering events...
+Applied slab filter (buffer: 20 km). Remaining events: 373
+Grid bounds: Lon [94.00, 110.00], Lat [-9.00, 6.00]
+Calculating grid points (this may take a while)...
+Completed 680 grid nodes successfully.
+Saved to "zvalue_grid.csv"
+Exporting GeoTIFF...
+Saved zvalue GeoTIFF to "zvalue_grid_zvalue.tif"

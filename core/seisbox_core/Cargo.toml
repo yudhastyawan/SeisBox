@@ -1,0 +1,32 @@
+[package]
+name = "seisbox_core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eframe = { workspace = true }
+egui_extras = { workspace = true }
+egui_plot = { workspace = true }
+serde = { workspace = true }
+sacio = { workspace = true }
+miniseed-rs = { workspace = true }
+rustfft = { workspace = true }
+sci-rs = { workspace = true }
+image = { workspace = true }
+chrono = { workspace = true }
+shapefile = { workspace = true }
+reqwest = { workspace = true }
+csv = { workspace = true }
+plotters = { workspace = true }
+rand = { workspace = true }
+rand_distr = { workspace = true }
+serde_json = { workspace = true }
+tempfile = { workspace = true }
+kiddo = { workspace = true }
+statrs = { workspace = true }
+rayon = { workspace = true }
+npyz = { workspace = true }
+zip = { workspace = true }
+tiff = { workspace = true }
+nalgebra = { workspace = true }
+tracing = { workspace = true }

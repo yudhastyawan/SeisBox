@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ISC Catalog Search — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html">Waveform Viewer</a></li>
+        <li><a href="hvsr.html">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html">Coulomb Stress</a></li>
+        <li><a href="bvor.html">BVor Analysis</a></li>
+        <li><a href="isc.html" class="active">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html">FDSN Downloader</a></li>
+        <li><a href="spatial.html">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>ISC Catalog Search</span></div>
+    <h1>ISC Catalog Search</h1>
+    <p class="lead">Search and download earthquake catalogs from the International Seismological Centre (ISC) directly within SeisBox, with an interactive map for bounding box selection.</p>
+
+    <h2>Overview</h2>
+    <p>The ISC Catalog Search module connects to the ISC Bulletin API to retrieve earthquake event data (time, location, depth, magnitude) for a user-defined geographic region and time window. Downloaded events are displayed on the built-in map and can be passed to the Spatial Analysis, BVor Analysis, or Coulomb Stress modules.</p>
+    <div class="callout callout-info"><p>Access from: <strong>Catalog → ISC Catalog Search</strong> (or the spatial analysis toolbar). An active internet connection is required.</p></div>
+
+    <h2>Search Parameters</h2>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Start Date</td><td><code>YYYY-MM-DD</code></td><td>Start date of the search window.</td></tr>
+        <tr><td>Start Time</td><td><code>HH:MM:SS</code></td><td>Start time on the start date (UTC).</td></tr>
+        <tr><td>End Date</td><td><code>YYYY-MM-DD</code></td><td>End date of the search window.</td></tr>
+        <tr><td>End Time</td><td><code>HH:MM:SS</code></td><td>End time on the end date (UTC).</td></tr>
+        <tr><td>Min Depth (km)</td><td>numeric</td><td>Minimum focal depth filter.</td></tr>
+        <tr><td>Max Depth (km)</td><td>numeric</td><td>Maximum focal depth filter.</td></tr>
+        <tr><td>Min Mag</td><td>numeric</td><td>Minimum magnitude (any magnitude type).</td></tr>
+        <tr><td>Max Mag</td><td>numeric</td><td>Maximum magnitude. Set to a large value (e.g., 10) to include all events.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Geographic Bounding Box</h2>
+    <p>Define the search area using the interactive map:</p>
+    <ol class="step-list">
+      <li><strong>Click "Draw BBox"</strong><p>The cursor changes to bounding-box draw mode.</p></li>
+      <li><strong>Click and drag on the map</strong><p>Draw a rectangle over the region of interest. The coordinates are shown next to the button and sent to the ISC API.</p></li>
+      <li><strong>Adjust</strong><p>Click "Draw BBox" again to redraw a new rectangle.</p></li>
+    </ol>
+    <div class="callout callout-tip"><p>You can also pan and zoom the map before drawing. Use the mouse wheel to zoom, and click-drag to pan (when not in Draw BBox mode).</p></div>
+
+    <h2>Searching the Catalog</h2>
+    <p>Click <strong>"Search ISC"</strong> to initiate the query. The search runs asynchronously in the background — the button label changes to "Searching..." and a status message at the bottom of the window shows progress. Large queries (many events or long time windows) may take 10–60 seconds.</p>
+    <p>The number of returned events is displayed in the status bar after completion. Events are plotted as dots on the map, sized and colored by magnitude.</p>
+
+    <h2>Cross-Section View</h2>
+    <p>After loading events, you can define a cross-section profile on the map to visualize seismicity along a line (e.g., along a fault trace). Depth-distance cross-section plots are available in the Spatial Analysis view.</p>
+
+    <h2>Exporting the Catalog</h2>
+    <ul>
+      <li><strong>CSV Export:</strong> Use <strong>File → Export Catalog CSV</strong> to save all loaded events as a CSV file with columns: longitude, latitude, depth, magnitude, time.</li>
+      <li><strong>Raw ISC Data:</strong> The raw ISC bulletin text is stored internally and can be saved via <strong>File → Save Raw ISC Data</strong>.</li>
+    </ul>
+
+    <h2>Using Events in Other Modules</h2>
+    <p>Events loaded from ISC are automatically available to other analysis modules:</p>
+    <ul>
+      <li><strong>BVor Analysis:</strong> Leave the CSV field empty — the module will use the active ISC events directly.</li>
+      <li><strong>Spatial Analysis:</strong> The map and cross-section views reflect the currently loaded events.</li>
+      <li><strong>Coulomb Stress Batch:</strong> Export the catalog as CSV, then use it as the batch receiver file.</li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>

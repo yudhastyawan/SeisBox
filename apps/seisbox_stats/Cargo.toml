@@ -1,0 +1,30 @@
+[package]
+name = "seisbox_stats"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+seisbox_core = { path = "../../core/seisbox_core" }
+eframe = { workspace = true }
+egui_plot = { workspace = true }
+egui_extras = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+rfd = { workspace = true }
+statrs = { workspace = true }
+rand = { workspace = true }
+kiddo = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+csv = { workspace = true }
+geo = { workspace = true }
+rayon = { workspace = true }
+npyz = { workspace = true }
+zip = { workspace = true }
+plotters = { workspace = true }
+shapefile = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true }
+tiff = { workspace = true }
+num_cpus = "1.16"
+nalgebra.workspace = true

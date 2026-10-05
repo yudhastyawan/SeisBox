@@ -1,0 +1,6 @@
+# Initial/Reference Model for Deterministic Inversion (2 Columns)
+# Format: thickness(m) Vs(m/s)
+# Gunakan bersamaan dengan opsi --use-brocher atau custom expression (--vp-expr & --rho-expr)
+5.0 250.0
+15.0 400.0
+0.0 700.0

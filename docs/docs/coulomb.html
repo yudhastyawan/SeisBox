@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coulomb Stress — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html">Waveform Viewer</a></li>
+        <li><a href="hvsr.html">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html" class="active">Coulomb Stress</a></li>
+        <li><a href="bvor.html">BVor Analysis</a></li>
+        <li><a href="isc.html">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html">FDSN Downloader</a></li>
+        <li><a href="spatial.html">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>Coulomb Stress</span></div>
+    <h1>Coulomb Stress Analysis</h1>
+    <p class="lead">Compute Coulomb Failure Stress changes (ΔCFF) caused by a source fault using the Okada (1992) dislocation model, with optional receiver fault optimization.</p>
+
+    <h2>Overview</h2>
+    <p>Coulomb Failure Stress (CFS) analysis quantifies how a mainshock (or any fault slip) redistributes stress in the surrounding crust, potentially promoting or inhibiting aftershocks or future earthquakes. SeisBox implements the complete Okada (1992) half-space dislocation model for ΔCFF computation with three operating modes.</p>
+    <div class="callout callout-info"><p>Access from: <strong>Analysis → Coulomb Stress</strong></p></div>
+
+    <h2>Input File Format</h2>
+    <p>Coulomb stress calculations require a <strong>Coulomb input file</strong> (compatible with the Coulomb 3.x format, <code>.inp</code> extension). This file specifies:</p>
+    <ul>
+      <li>Elastic medium properties (Poisson's ratio, Young's modulus, friction coefficient)</li>
+      <li>One or more source fault segments (location, strike, dip, rake, slip, dimensions)</li>
+      <li>Output grid specification</li>
+    </ul>
+    <p>Use the built-in <strong>Input Generator</strong> (accessible via the <strong>Open Input Generator</strong> button) to create or edit input files with a GUI form instead of writing them manually.</p>
+
+    <h2>Operating Modes</h2>
+
+    <h3>Mode 1: Coulomb Grid</h3>
+    <p>Computes ΔCFF on a regular 2D grid at a specified depth, for a given receiver fault orientation (strike, dip, rake). This is the most common use case — ideal for visualizing the spatial pattern of stress changes around the mainshock.</p>
+
+    <h3>Mode 2: Deformation</h3>
+    <p>Computes surface deformation (displacement vectors) caused by the source fault. Useful for cross-checking against InSAR or GPS data.</p>
+
+    <h3>Mode 3: Batch Receiver</h3>
+    <p>Evaluates ΔCFF at multiple receiver fault locations defined in a separate batch CSV file. Useful for computing stress changes at known aftershock hypocenters with their individual focal mechanisms.</p>
+
+    <h2>Receiver Fault Parameters</h2>
+    <p>For Coulomb Grid and Batch modes, you need to specify the geometry of the receiver fault (the fault plane on which stress change is evaluated):</p>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Strike (°)</td><td>30</td><td>Strike direction of the receiver fault (0–360°, measured clockwise from North).</td></tr>
+        <tr><td>Dip (°)</td><td>90</td><td>Dip angle of the receiver fault (0–90°, 90° = vertical).</td></tr>
+        <tr><td>Rake (°)</td><td>180</td><td>Slip direction on the receiver fault (−180 to 180°). 0° = left-lateral, ±90° = dip-slip, 180° = right-lateral.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Grid Configuration</h2>
+    <p>The calculation grid can be specified in two ways:</p>
+    <ul>
+      <li><strong>From input file:</strong> Use the grid bounds defined in your <code>.inp</code> file.</li>
+      <li><strong>Override Grid:</strong> Check <strong>"Override Grid"</strong> to manually specify min/max X, Y (km from fault center) and grid spacing, or set geographic bounds (lon/lat with a reference origin point).</li>
+    </ul>
+
+    <h3>Depth Configuration</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Depth (km)</td><td>Single depth at which ΔCFF is computed (for non-range mode).</td></tr>
+        <tr><td>Depth Range</td><td>Enable to compute over multiple depth slices. Set Min Depth, Max Depth, and Depth Increment (all in km).</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Receiver Fault Optimization</h2>
+    <p>Enable <strong>"Optimize Receiver Fault"</strong> to search for the receiver fault orientation that maximizes the mean ΔCFF over a specified region. This is useful for identifying which fault geometries are most likely to be triggered by the source rupture.</p>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Optimize Strike / Dip / Rake</td><td>Select which parameters to optimize. Each selected parameter is varied over the full geometric range.</td></tr>
+        <tr><td>Strike Increment (°)</td><td>Step size for the strike search (e.g., 10° = 36 strike values tested).</td></tr>
+        <tr><td>Dip Increment (°)</td><td>Step size for the dip search.</td></tr>
+        <tr><td>Rake Increment (°)</td><td>Step size for the rake search.</td></tr>
+        <tr><td>Optimize for Shear / Normal / Coulomb</td><td>Choose which stress component to maximize.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-warn"><p>Optimization with all three parameters and small increments (e.g., 5°) involves many thousands of model evaluations. Expect computation times of several minutes. Use coarser increments (e.g., 30°) for a rapid first pass.</p></div>
+
+    <h2>Results &amp; Visualization</h2>
+    <p>Results are displayed as a 2D scatter plot (colored by ΔCFF value) overlaid on the mapped coastline. Color scale: red = positive ΔCFF (stress increase, promotes failure), blue = negative ΔCFF (stress shadow, inhibits failure).</p>
+
+    <h3>Exporting Results</h3>
+    <p>After calculation, use <strong>File → Export CSV</strong> to save the full grid results (X, Y, Depth, Shear, Normal, Coulomb columns) as a CSV file for further analysis in Python, MATLAB, or GIS software.</p>
+
+    <h2>Batch CSV Format</h2>
+    <p>For Mode 3 (Batch Receiver), the batch file must be a CSV with the following columns:</p>
+    <pre><code>lon,lat,depth_km,strike,dip,rake
+127.5,-0.6,10.0,45,60,90
+127.8,-0.9,15.0,135,45,-90
+...</code></pre>
+  </main>
+</div>
+</body>
+</html>

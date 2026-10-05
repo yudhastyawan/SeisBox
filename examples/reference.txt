@@ -1,0 +1,5 @@
+# Initial/Reference Model for Deterministic Inversion
+# Format: thickness(m) Vp(m/s) Vs(m/s) Density(g/cm3)
+5.0 450.0 250.0 1.8
+15.0 700.0 400.0 1.9
+0.0 1200.0 700.0 2.2

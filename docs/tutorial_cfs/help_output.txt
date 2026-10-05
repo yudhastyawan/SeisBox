@@ -1,0 +1,349 @@
+SeisBox CFS Command Line Interface
+
+Author: Yudha Styawan, Geophysical Engineering, Institut Teknologi Sumatera, Indonesia
+
+CREDITS & DISCLAIMER:
+This software is a modern CLI replica of the original Coulomb 3.3 software developed by 
+Shinji Toda, Ross S. Stein, Volkan Sevilgen, and Jian Lin (USGS). It is developed solely 
+for the purpose of facilitating academic research and ease of use. Please cite the original 
+Coulomb 3.3 authors when using the underlying mathematical geomechanics models.
+
+BATCH FILE FORMAT:
+If using the --batch mode, the file must be a CSV format with a header row.
+The header must contain the following columns (case-insensitive):
+- Coordinates: 'lon' and 'lat' (degrees) OR 'x' and 'y' (Cartesian km)
+- Depth: 'z' (km)
+- Mechanism: 'strike', 'dip', 'rake' (degrees)
+
+Example CSV content:
+lon,lat,z,strike,dip,rake
+127.5,-1.2,10.0,45.0,90.0,0.0
+
+
+Usage: seisbox_cfs [OPTIONS]
+
+Options:
+      --plot-cbar-tick-size <PLOT_CBAR_TICK_SIZE>
+          Font size for colorbar ticks
+
+      --plot-fault-color <PLOT_FAULT_COLOR>
+          Color of the fault's top edge line (default: black)
+
+      --plot-fault-width <PLOT_FAULT_WIDTH>
+          Thickness of the fault's top edge line (default: 4)
+
+      --plot-fault-style <PLOT_FAULT_STYLE>
+          Style of the fault's top edge line: 'solid' or 'dashed' (default: solid)
+
+      --plot-cs-track
+          Draw the cross-section track line on the map
+          (requires --cs-start-lon, --cs-finish-lon, etc.)
+
+      --plot-cs-track-color <PLOT_CS_TRACK_COLOR>
+          Color of the cross-section track line (default: black)
+
+      --plot-cs-track-width <PLOT_CS_TRACK_WIDTH>
+          Thickness of the cross-section track line (default: 5)
+
+      --plot-cs-track-style <PLOT_CS_TRACK_STYLE>
+          Style of the cross-section track line: 'solid' or 'dashed' (default: solid)
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+
+Input / Output (Required):
+  -i, --input <INPUT>
+          Path to the source earthquake input file (.inp)
+
+  -o, --output <OUTPUT>
+          File path to save the output CSV
+
+Batch Mode:
+  -b, --batch <BATCH>
+          Path to the batch receiver fault file (.csv or .txt)
+
+Information:
+      --show-info
+          Extract and show the input file information
+          (strike, dip, rake, physics, etc) without calculating
+
+      --validate
+          Validate the input file to ensure it's readable, complete, and ready for calculation
+
+Generator Mode:
+      --generate-inp <GENERATE_INP>
+          Generate a new Coulomb INP file
+
+      --append-inp <APPEND_INP>
+          Append a new fault to an existing Coulomb INP file
+
+      --gen-strike <GEN_STRIKE>
+          Generator fault strike angle (degrees)
+          
+          [default: 0]
+
+      --gen-dip <GEN_DIP>
+          Generator fault dip angle (degrees)
+          
+          [default: 90]
+
+      --gen-rake <GEN_RAKE>
+          Generator fault rake angle (degrees)
+          
+          [default: 0]
+
+      --gen-length <GEN_LENGTH>
+          Generator fault length (km). Defaults to 50.0 or derived from --gen-mag
+
+      --gen-width <GEN_WIDTH>
+          Generator fault width (km). Defaults to 20.0 or derived from --gen-mag
+
+      --gen-depth <GEN_DEPTH>
+          Generator fault center depth (km)
+          
+          [default: 10]
+
+      --gen-slip <GEN_SLIP>
+          Generator fault slip amount (m). Defaults to 1.0 or derived from --gen-mag
+
+      --gen-mag <GEN_MAG>
+          Generator magnitude. If provided, length, width,
+          and slip are calculated automatically using empirical relationships
+
+      --gen-fault-sense <GEN_FAULT_SENSE>
+          Fault sense for magnitude calculation:
+          all, ss (strike-slip), rev (reverse), norm (normal)
+          
+          [default: all]
+
+      --gen-lon <GEN_LON>
+          Generator epicenter longitude (center of the grid)
+          
+          [default: 0]
+
+      --gen-lat <GEN_LAT>
+          Generator epicenter latitude (center of the grid)
+          
+          [default: 0]
+
+      --gen-grid-size <GEN_GRID_SIZE>
+          Grid size limit (radius in degrees) from epicenter
+          
+          [default: 1]
+
+Standard Grid Mode:
+  -s, --strike <STRIKE>
+          Receiver fault strike (if not using batch file)
+          
+          [default: 0]
+
+  -d, --dip <DIP>
+          Receiver fault dip (if not using batch file)
+          
+          [default: 90]
+
+  -r, --rake <RAKE>
+          Receiver fault rake (if not using batch file)
+          
+          [default: 0]
+
+      --depth <DEPTH>
+          Depth for calculation (start depth)
+          
+          [default: 0]
+
+      --depth-finish <DEPTH_FINISH>
+          Override finish depth (if specified, calculates multiple depths)
+
+      --depth-inc <DEPTH_INC>
+          Override depth increment
+
+      --use-source-mech
+          Use the source fault mechanism (average strike, dip, rake
+          from INP) for the receiver fault
+
+Grid Bounds Overrides (Optional):
+      --grid-start-x <GRID_START_X>
+          Override grid start X
+
+      --grid-finish-x <GRID_FINISH_X>
+          Override grid finish X
+
+      --grid-start-y <GRID_START_Y>
+          Override grid start Y
+
+      --grid-finish-y <GRID_FINISH_Y>
+          Override grid finish Y
+
+      --grid-x-inc <GRID_X_INC>
+          Override grid X increment
+
+      --grid-y-inc <GRID_Y_INC>
+          Override grid Y increment
+
+      --grid-start-lon <GRID_START_LON>
+          Override grid start Longitude
+
+      --grid-finish-lon <GRID_FINISH_LON>
+          Override grid finish Longitude
+
+      --grid-start-lat <GRID_START_LAT>
+          Override grid start Latitude
+
+      --grid-finish-lat <GRID_FINISH_LAT>
+          Override grid finish Latitude
+
+      --grid-lon-inc <GRID_LON_INC>
+          Override grid Longitude increment (degrees)
+
+      --grid-lat-inc <GRID_LAT_INC>
+          Override grid Latitude increment (degrees)
+
+Physical Parameter Overrides (Optional):
+      --fric <FRIC>
+          Override Friction Coefficient (FRIC)
+
+      --poisson <POISSON>
+          Override Poisson's Ratio (PR1/PR2)
+
+      --young <YOUNG>
+          Override Young's Modulus (E1/E2)
+
+Optimally Oriented Fault (OOF):
+      --oof
+          Enable Optimally Oriented Fault (OOF) mode. Receiver fault geometry is determined from the total stress field (regional tectonic stress + coseismic perturbation) using Mohr-Coulomb failure theory. Requires regional stress parameters (from INP file or --regional-* overrides)
+
+      --regional-mag <REGIONAL_MAG>
+          Override regional stress magnitude σ₁−σ₃ (bar)
+
+      --regional-azimuth <REGIONAL_AZIMUTH>
+          Override regional stress σ₁ azimuth (degrees CW from North)
+
+      --regional-plunge <REGIONAL_PLUNGE>
+          Override regional stress σ₁ plunge (degrees downward from horizontal)
+
+Output Options:
+      --tiff
+          Output a TIFF raster image along with the CSV (Grid mode only)
+
+      --max-depth
+          Save the maximum Coulomb stress across all depth layers (Grid mode only)
+
+Cross Section Mode:
+      --cross-section
+          Enable cross-section calculation mode
+
+      --cs-start-lon <CS_START_LON>...
+          Cross-section start longitude (degrees)
+
+      --cs-finish-lon <CS_FINISH_LON>...
+          Cross-section finish longitude (degrees)
+
+      --cs-start-lat <CS_START_LAT>...
+          Cross-section start latitude (degrees)
+
+      --cs-finish-lat <CS_FINISH_LAT>...
+          Cross-section finish latitude (degrees)
+
+      --cs-dist-inc <CS_DIST_INC>
+          Distance increment for cross-section (km)
+          
+          [default: 2]
+
+Plotting Engine:
+      --plot-csv <PLOT_CSV>
+          Read an existing CSV output file and plot it directly to PNG
+
+      --plot-out <PLOT_OUT>
+          Specific output PNG file path for the plot
+
+      --plot-aspect-equal
+          Force aspect ratio to 1:1 for the plot
+
+      --plot-contourf
+          Enable smooth contour plotting (contourf) instead of blocky pcolormesh
+
+Plotting Engine Options:
+      --plot-inp <PLOT_INP>
+          Overlay faults from an INP file onto the plot
+
+      --plot-vmin <PLOT_VMIN>
+          Override minimum value for colormap (vmin) (default: auto calculated from data)
+
+      --plot-vmax <PLOT_VMAX>
+          Override maximum value for colormap (vmax) (default: auto calculated from data)
+
+      --plot-title <PLOT_TITLE>
+          Set a custom title for the plot (default: dynamic based on mode)
+
+      --plot-width <PLOT_WIDTH>
+          Set custom output image width (default: 1200)
+
+      --plot-height <PLOT_HEIGHT>
+          Set custom output image height (default: 800)
+
+      --plot-contour-steps <PLOT_CONTOUR_STEPS>
+          Set the number of color contour steps (default: 50)
+
+      --plot-upsample-res <PLOT_UPSAMPLE_RES>
+          Set the upsampling resolution for contourf (default: 300)
+
+      --plot-title-size <PLOT_TITLE_SIZE>
+          Set font size for the plot title (default: 45)
+
+      --plot-label-size <PLOT_LABEL_SIZE>
+          Set font size for the axis labels (default: 32)
+
+      --plot-tick-size <PLOT_TICK_SIZE>
+          Set font size for the axis ticks (default: 24)
+
+      --plot-x-labels <PLOT_X_LABELS>
+          Set the maximum number of x-axis tick labels (default: 10)
+
+      --plot-y-labels <PLOT_Y_LABELS>
+          Set the maximum number of y-axis tick labels (default: 10)
+
+      --plot-cbar-label <PLOT_CBAR_LABEL>
+          Set custom title for the colorbar (default: Coulomb Stress Change (bar))
+
+      --plot-cbar-label-size <PLOT_CBAR_LABEL_SIZE>
+          Set custom font size for the colorbar title (default: follows --plot-label-size)
+
+      --plot-cbar-y-labels <PLOT_CBAR_Y_LABELS>
+          Y-axis labels count for colorbar tick labels (default: 10)
+
+      --plot-cbar-extend <PLOT_CBAR_EXTEND>
+          Set colorbar extend arrows (none, min, max, both) (default: both)
+
+EXAMPLES:
+
+1. Generate a new INP file from manual coordinates:
+   seisbox_cfs --generate-inp file_baru.inp --gen-strike 45.0 --gen-dip 80.0 \
+      --gen-rake 90.0 --gen-lon 128.0 --gen-lat -1.0 --gen-mag 7.2 \
+      --gen-fault-sense ss
+
+2. Validate an existing INP file before running calculations:
+   seisbox_cfs -i fault.inp --validate
+
+3. Calculate Standard Grid with specific depths and output to CSV:
+   seisbox_cfs -i fault.inp --use-source-mech --depth 10.0 \
+      --depth-finish 15.0 --depth-inc 5.0 -o output.csv
+
+4. Calculate using a Batch file of receiver faults:
+   seisbox_cfs -i fault.inp -b receivers.csv -o batch_output.csv
+
+5. Calculate Optimally Oriented Fault (OOF) using regional stress:
+   seisbox_cfs -i fault.inp --oof --tiff --depth 10.0 -o oof.csv
+
+6. Calculate Cross-Section profiling:
+   seisbox_cfs -i fault.inp --cross-section --use-source-mech \
+      --cs-start-lon 127.0 --cs-finish-lon 130.0 \
+      --cs-start-lat -2.0 --cs-finish-lat 1.0 -o cross_section.csv
+
+7. Generate a custom high-resolution plot from a CSV file:
+   seisbox_cfs --plot-csv output.csv --plot-contourf --plot-width 1920 \
+      --plot-height 1080 --plot-title "My Custom Plot" \
+      --plot-title-size 60 --plot-cbar-extend both

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waveform Viewer — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Getting Started</h4>
+      <ul class="sidebar-nav"><li><a href="../index.html#install">Installation</a></li></ul>
+    </div>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html" class="active">Waveform Viewer</a></li>
+        <li><a href="hvsr.html">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html">Coulomb Stress</a></li>
+        <li><a href="bvor.html">BVor Analysis</a></li>
+        <li><a href="isc.html">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html">FDSN Downloader</a></li>
+        <li><a href="spatial.html">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>Waveform Viewer</span></div>
+    <h1>Waveform Viewer</h1>
+    <p class="lead">Load, inspect, and navigate multi-component seismic waveforms in SAC and MiniSEED formats with full phase picking support.</p>
+
+    <h2>Overview</h2>
+    <p>The Waveform Viewer is the central workspace of SeisBox. It displays seismic traces in a multi-panel time-series view, supports interactive zoom/cut operations, bandpass filtering, spectrogram computation, and phase annotation. Picks are saved automatically to companion <code>.picks</code> files alongside the original data file.</p>
+
+    <h2>Loading Data</h2>
+    <p>Go to <strong>File → Open File(s)</strong> to load individual SAC or MiniSEED files, or <strong>File → Open Folder</strong> to load all waveform files in a directory. SeisBox automatically groups traces by station-component and populates the sidebar.</p>
+    <div class="callout callout-info"><p>Supported formats: <strong>SAC (.sac, .SAC)</strong> and <strong>MiniSEED (.mseed, .seed)</strong>.</p></div>
+
+    <h2>Navigation</h2>
+    <ul>
+      <li>Click a trace in the <strong>sidebar</strong> to bring it into focus.</li>
+      <li>Use <kbd>Shift+,</kbd> / <kbd>Shift+.</kbd> to navigate to the previous/next station group.</li>
+      <li>Scroll the mouse wheel over the plot to pan; hold <kbd>Ctrl</kbd> to zoom.</li>
+      <li>Drag to pan the view.</li>
+    </ul>
+
+    <h2>Phase Picking</h2>
+    <p>Phase picks are placed by hovering the mouse over the time position on any trace and pressing the corresponding key. Picks are shown as vertical colored lines on the plot.</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>p</kbd></td><td>Place / update <strong>P-wave start</strong> pick at cursor position</td></tr>
+        <tr><td><kbd>o</kbd></td><td>Place / update <strong>P-wave end</strong> pick</td></tr>
+        <tr><td><kbd>s</kbd></td><td>Place / update <strong>S-wave start</strong> pick</td></tr>
+        <tr><td><kbd>a</kbd></td><td>Place / update <strong>S-wave end</strong> pick</td></tr>
+        <tr><td><kbd>Shift+P</kbd></td><td>Delete P-start pick</td></tr>
+        <tr><td><kbd>Shift+S</kbd></td><td>Delete S-start pick</td></tr>
+        <tr><td><kbd>Shift+O</kbd></td><td>Delete P-end pick</td></tr>
+        <tr><td><kbd>Shift+A</kbd></td><td>Delete S-end pick</td></tr>
+        <tr><td><kbd>w</kbd></td><td>Wipe <em>all</em> picks on the active trace</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pick Metadata</h3>
+    <p>After placing a pick, hover close to it and press the following keys to annotate it:</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Key</th><th>Annotation</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>i</kbd></td><td>Set onset to <strong>Impulsive</strong></td></tr>
+        <tr><td><kbd>e</kbd></td><td>Set onset to <strong>Emergent</strong></td></tr>
+        <tr><td><kbd>u</kbd></td><td>Set first-motion polarity to <strong>Up</strong></td></tr>
+        <tr><td><kbd>d</kbd></td><td>Set first-motion polarity to <strong>Down</strong></td></tr>
+        <tr><td><kbd>[</kbd></td><td>Decrease pick <strong>uncertainty</strong> by 0.01 s</td></tr>
+        <tr><td><kbd>]</kbd></td><td>Increase pick <strong>uncertainty</strong> by 0.01 s</td></tr>
+        <tr><td><kbd>=</kbd></td><td>Capture amplitude at cursor position for the nearest pick</td></tr>
+      </tbody>
+    </table>
+
+    <h2>View Controls</h2>
+    <table class="shortcut-table">
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>c</kbd> (twice)</td><td>Cut the X-axis view to a time range (press once to set start, again for end)</td></tr>
+        <tr><td><kbd>Shift+C</kbd></td><td>Reset the cut — restore full trace view</td></tr>
+        <tr><td><kbd>z</kbd> (twice)</td><td>Zoom the X-axis to a selected time range</td></tr>
+        <tr><td><kbd>Shift+Z</kbd></td><td>Reset zoom to full view</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Filtering</h2>
+    <table class="shortcut-table">
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>b</kbd></td><td>Open/close the <strong>Bandpass Filter</strong> dialog</td></tr>
+        <tr><td><kbd>f</kbd></td><td>Toggle <strong>Predictive Filter</strong> (requires a P-start pick)</td></tr>
+        <tr><td><kbd>Shift+B</kbd> or <kbd>Shift+F</kbd></td><td>Remove all filters — restore original trace</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Analysis Tools</h2>
+    <table class="shortcut-table">
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>q</kbd></td><td>Compute and display <strong>Spectrogram</strong> for the active trace (within current view)</td></tr>
+        <tr><td><kbd>Shift+Q</kbd></td><td>Hide spectrogram</td></tr>
+        <tr><td><kbd>h</kbd></td><td>Toggle <strong>Hodogram</strong> display</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip"><p>For large waveforms (&gt;100,000 samples), SeisBox will ask for confirmation before computing the spectrogram to avoid performance issues.</p></div>
+
+    <h2>Automatic Pick Saving</h2>
+    <p>Every time a pick is placed, modified, or deleted, SeisBox auto-saves the pick set to a <code>.picks</code> file next to the original seismic file. The file format is a simple tab-delimited text file compatible with common seismic analysis workflows. Picks are automatically loaded the next time you open the same file.</p>
+
+    <h2>Exporting Picks</h2>
+    <p>Go to <strong>File → Export Picks</strong> to save all picks to a structured text file. Use <strong>File → Export Image</strong> to save a PNG of the current trace view.</p>
+  </main>
+</div>
+</body>
+</html>

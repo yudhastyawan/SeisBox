@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FDSN Downloader — SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+<div class="page-wrap">
+  <nav class="sidebar">
+    <a href="../index.html" class="sidebar-logo"><img src="../assets/seisbox_icon.svg" alt="SeisBox" />SeisBox</a>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <ul class="sidebar-nav">
+        <li><a href="waveform.html">Waveform Viewer</a></li>
+        <li><a href="hvsr.html">HVSR Analysis</a></li>
+        <li><a href="rjmcmc.html">RJ-MCMC Inversion</a></li>
+        <li><a href="coulomb.html">Coulomb Stress</a></li>
+        <li><a href="bvor.html">BVor Analysis</a></li>
+        <li><a href="isc.html">ISC Catalog Search</a></li>
+        <li><a href="fdsn.html" class="active">FDSN Downloader</a></li>
+        <li><a href="spatial.html">Spatial Analysis</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> › <span>FDSN Downloader</span></div>
+    <h1>FDSN Data Downloader</h1>
+    <p class="lead">Search for seismic stations and download waveforms and StationXML metadata from 25+ global FDSN-compliant web services.</p>
+
+    <h2>Overview</h2>
+    <p>The FDSN (International Federation of Digital Seismograph Networks) Downloader allows you to discover seismic stations near a reference earthquake and download the corresponding waveform data (MiniSEED) and instrument response files (StationXML) in one workflow, without leaving SeisBox.</p>
+    <div class="callout callout-info"><p>Access from: <strong>Data → FDSN Data Downloader</strong>. An active internet connection is required.</p></div>
+
+    <h2>Supported Data Providers</h2>
+    <p>SeisBox pre-configures 25 major FDSN nodes. Select one or multiple providers using the checkboxes at the top of the left panel:</p>
+    <table class="param-table">
+      <thead><tr><th>Provider</th><th>Coverage</th></tr></thead>
+      <tbody>
+        <tr><td>IRIS / EarthScope</td><td>Largest global federator, worldwide coverage</td></tr>
+        <tr><td>EIDA / ORFEUS</td><td>European seismograph networks</td></tr>
+        <tr><td>GFZ / GEOFON</td><td>Global, Germany EIDA node</td></tr>
+        <tr><td>INGV</td><td>Italy and Mediterranean</td></tr>
+        <tr><td>GEONET</td><td>New Zealand</td></tr>
+        <tr><td>AUSPASS</td><td>Australia and regional</td></tr>
+        <tr><td>USP</td><td>Brazilian Seismograph Network</td></tr>
+        <tr><td>RASPISHAKE</td><td>Citizen-science IoT geophone network</td></tr>
+        <tr><td colspan="2" style="color:var(--text-muted); font-style:italic; font-size:0.8rem;">...and 17 more regional providers</td></tr>
+      </tbody>
+    </table>
+    <p>Use <strong>Select All</strong> to search all providers simultaneously (slower but most complete).</p>
+
+    <h2>Configuration</h2>
+
+    <h3>Reference Earthquake</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Format</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Latitude</td><td>decimal degrees</td><td>Epicenter latitude of the reference earthquake.</td></tr>
+        <tr><td>Longitude</td><td>decimal degrees</td><td>Epicenter longitude.</td></tr>
+        <tr><td>Origin Date</td><td><code>YYYY-MM-DD</code></td><td>Date of the earthquake.</td></tr>
+        <tr><td>Origin Time</td><td><code>HH:MM:SS</code></td><td>Origin time in UTC.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Station Search Parameters</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Min Radius (degrees)</td><td>0.0</td><td>Inner radius of the annular search zone around the epicenter. Useful to exclude very close stations.</td></tr>
+        <tr><td>Max Radius (degrees)</td><td>5.0</td><td>Outer radius of the search zone. 1° ≈ 111 km.</td></tr>
+        <tr><td>Channel</td><td>BHZ,HHZ</td><td>Comma-separated list of channel codes to search for. Wildcards supported: <code>BH?</code> matches BHZ, BHN, BHE.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Time Window</h3>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Start Offset (s)</td><td>−60</td><td>Start of the waveform window relative to origin time (negative = before the earthquake).</td></tr>
+        <tr><td>End Offset (s)</td><td>600</td><td>End of the waveform window relative to origin time.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Workflow</h2>
+    <ol class="step-list">
+      <li><strong>Select Providers</strong><p>Check the FDSN nodes you want to query. For teleseismic data, IRIS is usually sufficient. For regional networks, add the appropriate regional provider.</p></li>
+      <li><strong>Enter Reference Earthquake</strong><p>Fill in the epicenter coordinates and origin time. You can copy these from the ISC Catalog Search results.</p></li>
+      <li><strong>Click "🔍 Search Stations"</strong><p>Searches all selected providers simultaneously. Found stations appear in the table at the bottom and as blue diamonds on the map.</p></li>
+      <li><strong>Download Waveforms</strong><p>Click <strong>"⬇️ Download Waveforms"</strong> and choose an output folder. All found stations are downloaded as MiniSEED files. Progress is shown with a percentage bar.</p></li>
+      <li><strong>Download StationXML (Optional)</strong><p>Click <strong>"📥 Download StationXML"</strong> to also download instrument response files in StationXML format (needed for deconvolution/instrument correction). A <code>stations.csv</code> summary is also saved.</p></li>
+    </ol>
+    <div class="callout callout-tip"><p>After downloading, use <strong>File → Open Folder</strong> in the Waveform Viewer to load all MiniSEED files from the output folder at once.</p></div>
+
+    <h2>Station Table</h2>
+    <p>The results table at the bottom shows all found stations with: Provider, Network code, Station code, Latitude, Longitude, Elevation (m), and Site Name. The table is sortable and can be exported as part of the StationXML download workflow.</p>
+
+    <h2>Map Display</h2>
+    <p>The right panel shows a global map with:</p>
+    <ul>
+      <li><strong>Red asterisk:</strong> The reference earthquake epicenter.</li>
+      <li><strong>Blue circle:</strong> Inner radius boundary.</li>
+      <li><strong>Green circle:</strong> Outer radius boundary.</li>
+      <li><strong>Blue diamonds:</strong> Found seismic stations.</li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HVSR Analysis - SeisBox Docs</title>
+  <link rel="icon" href="../assets/seisbox_icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .doc-content { padding: 40px 20px; max-width: 900px; margin: 0 auto; color: var(--text); }
+    .doc-content h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--text-strong); }
+    .doc-content h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 15px; color: var(--text-strong); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .doc-content p { line-height: 1.7; margin-bottom: 20px; font-size: 1.05rem; }
+    .doc-content img { max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); margin: 20px 0; border: 1px solid var(--border); }
+    .back-link { display: inline-block; margin-top: 20px; margin-bottom: 20px; color: var(--accent); text-decoration: none; font-weight: 500; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/seisbox_icon.svg" alt="SeisBox icon" width="32" height="32" />
+        <span>SeisBox</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html#docs" class="btn-ghost">← Back to Docs</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="doc-content">
+    <a href="../index.html#docs" class="back-link">← Back to Home</a>
+    
+    <h1>📊 HVSR Analysis GUI</h1>
+    <p>The HVSR (Horizontal-to-Vertical Spectral Ratio) Analysis module offers a robust, real-time graphical interface to evaluate microtremor data. It computes site amplification frequencies and rigorously evaluates the reliability and clarity of the peaks based on the SESAME (2004) criteria.</p>
+
+    <h2>1. Data Explorer</h2>
+    <p>Begin by loading your continuous waveform data (SAC or miniSEED format). The built-in Data Explorer allows you to navigate your filesystem, select 3-component data, and preview the raw seismograms instantly.</p>
+    <img src="../assets/images/gui/hvsr_data_explorer.png" alt="Data Explorer" />
+
+    <h2>2. Processing Parameters & Filtering</h2>
+    <p>Tune your signal processing strategy dynamically. Set window lengths, overlaps, tapering methods, and Konno-Ohmachi smoothing constants. You can immediately see the effect of STA/LTA anti-triggering parameters.</p>
+    <img src="../assets/images/gui/hvsr_process_parameters.png" alt="Processing Parameters" />
+
+    <h2>3. Windowing & Transient Rejection</h2>
+    <p>The "Data Windows" tab visualizes the division of the continuous trace into discrete time blocks. Green blocks indicate accepted stationary noise windows, while red blocks are rejected by the STA/LTA threshold to exclude transients.</p>
+    <img src="../assets/images/gui/hvsr_data_windows.png" alt="Data Windows" />
+
+    <h2>4. Mean HVSR Curve & Tuning</h2>
+    <p>View the resulting Mean HVSR curve with standard deviation bounds. You can interactively drag the frequency boundaries to focus on the fundamental frequency (f0).</p>
+    <img src="../assets/images/gui/hvsr_curve_result.png" alt="Mean HVSR Curve" />
+
+    <p>A convenient dropdown menu allows you to switch between viewing the Unfiltered curve, the STA/LTA filtered curve, or the curve processed with both STA/LTA and Variance screening.</p>
+    <img src="../assets/images/gui/hvsr_curve_dropdown.png" alt="Curve Dropdown Option" />
+
+    <h2>5. SESAME (2004) Evaluation</h2>
+    <p>SeisBox automatically conducts strict algorithmic checks against the 6 SESAME criteria (3 for reliability, 3 for clarity) to validate your site's dominant frequency.</p>
+    <img src="../assets/images/gui/hvsr_sesame_criteria.png" alt="SESAME Criteria Checklist" />
+
+    <h2>6. Time-Frequency Analysis (HVTFA)</h2>
+    <p>Investigate the temporal stability of the H/V ratio. The HVTFA map displays a spectrogram-like contour plot, helping you ensure that the peak frequency is persistent over time and not an artifact of a passing noise source.</p>
+    <img src="../assets/images/gui/hvsr_hvtfa_map.png" alt="HVTFA Map" />
+
+    <h2>7. Exporting Results</h2>
+    <p>You can export the numerical results to a structured CSV file. The CSV file preserves all processing metadata, parameters, and the complete SESAME pass/fail evaluation in its header.</p>
+    <img src="../assets/images/gui/hvsr_export_csv.png" alt="HVSR Export CSV" />
+    <img src="../assets/images/gui/hvsr_export_csv_hvtfa.png" alt="HVTFA Export CSV" />
+
+    <p>For publications and reports, export high-resolution plots directly from the interface.</p>
+    <img src="../assets/images/gui/hvsr_save_image_hvsr.png" alt="High Res Plot Export" />
+    <img src="../assets/images/gui/hvsr_save_image_hvtfa.png" alt="HVTFA Plot Export" />
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">Built with ❤️ and Rust by Yudha Styawan.</p>
+    </div>
+  </footer>
+</body>
+</html>

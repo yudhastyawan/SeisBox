@@ -1,0 +1,21 @@
+[package]
+name = "seisbox_fdsn"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+seisbox_core = { path = "../../core/seisbox_core" }
+eframe = { workspace = true }
+egui_plot = { workspace = true }
+egui_extras = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+rfd = { workspace = true }
+tokio = { version = "1.0", features = ["full"] }
+reqwest = { version = "0.11", features = ["json", "stream", "blocking"] }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true, features = ["derive"] }
+plotters = { workspace = true }
+rayon = { workspace = true }
+quick-xml = "0.42.0"

@@ -1,0 +1,19 @@
+[package]
+name = "seisbox_hvsr"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+seisbox_core = { path = "../../core/seisbox_core" }
+eframe = { workspace = true }
+egui_plot = { workspace = true }
+egui_extras = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+rfd = { workspace = true }
+rustfft = { workspace = true }
+nalgebra = { workspace = true }
+sci-rs = { workspace = true }
+statrs = { workspace = true }
+clap = { workspace = true }
+plotters = { workspace = true }
