@@ -310,7 +310,7 @@ pub struct Cli {
 }
 
 /// Parsed and validated configuration for the computation.
-#[derive(Debug)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Config {
     pub fmin: f64,
     pub fmax: f64,

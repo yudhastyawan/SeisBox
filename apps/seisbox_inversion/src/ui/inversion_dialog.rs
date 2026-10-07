@@ -711,30 +711,14 @@ fn open_obs_curve(path: &Path, state: &mut InversionState) {
 
 fn open_file(path: &Path, state: &mut InversionState) {
     let name = path.file_name().unwrap_or_default().to_string_lossy().into_owned();
-    if name.ends_with(".jsonl") {
-        match load_and_process_data(&path.to_string_lossy().to_string(), &state.obs_file) {
-            Ok(viz) => {
-                let tab = EditorTab::Visualization(name.clone(), viz);
-                if let Some(pos) = state.open_tabs.iter().position(|t| match t {
-                    EditorTab::Visualization(n, _) => n == &name,
-                    _ => false,
-                }) {
-                    state.active_tab_index = pos;
-                } else {
-                    state.open_tabs.push(tab);
-                    state.active_tab_index = state.open_tabs.len() - 1;
-                }
-            }
-            Err(e) => {
-                state.log_output = format!("Error loading JSONL: {}", e);
-            }
-        }
-    } else if name.ends_with(".json") {
+    
+    // First, try parsing as a single JSON object (for PSO, SA, Occam, LM)
+    if name.ends_with(".json") || name.ends_with(".jsonl") {
         if let Ok(content) = std::fs::read_to_string(path) {
-            // Try to parse as InversionResult first
-            if let Ok(result) = serde_json::from_str::<InversionResult>(&content) {
-                let mut obs_f = Vec::new();
-                let mut obs_h = Vec::new();
+            match serde_json::from_str::<InversionResult>(&content) {
+                Ok(result) => {
+                    let mut obs_f = Vec::new();
+                    let mut obs_h = Vec::new();
                 if !state.obs_file.is_empty() {
                     if let Ok((f, h)) = crate::hvf::inversion::read_obs_data(std::path::Path::new(&state.obs_file), -1.0, -1.0) {
                         obs_f = f;
@@ -754,7 +738,12 @@ fn open_file(path: &Path, state: &mut InversionState) {
                 }
                 return;
             }
-            // Try deterministic output
+            Err(e) => {
+                eprintln!("Failed to parse InversionResult from {}: {}", name, e);
+            }
+        }
+            
+        // Try deterministic output
             if let Ok(hvsr_out) = serde_json::from_str::<crate::hvf::output::HvsrOutput>(&content) {
                 let tab = EditorTab::DeterministicCurve(name.clone(), hvsr_out);
                 if let Some(pos) = state.open_tabs.iter().position(|t| match t {
@@ -766,11 +755,18 @@ fn open_file(path: &Path, state: &mut InversionState) {
                     state.open_tabs.push(tab);
                     state.active_tab_index = state.open_tabs.len() - 1;
                 }
-            } else {
-                // Fallback to ASCII
-                let tab = EditorTab::Ascii(path.to_path_buf(), content, false);
+                return;
+            }
+        }
+    }
+    
+    // Second, if it wasn't a standard JSON result and ends with .jsonl, load as RJMCMC JSONL
+    if name.ends_with(".jsonl") {
+        match load_and_process_data(&path.to_string_lossy().to_string(), &state.obs_file) {
+            Ok(viz) => {
+                let tab = EditorTab::Visualization(name.clone(), viz);
                 if let Some(pos) = state.open_tabs.iter().position(|t| match t {
-                    EditorTab::Ascii(p, _, _) => p == path,
+                    EditorTab::Visualization(n, _) => n == &name,
                     _ => false,
                 }) {
                     state.active_tab_index = pos;
@@ -779,8 +775,12 @@ fn open_file(path: &Path, state: &mut InversionState) {
                     state.active_tab_index = state.open_tabs.len() - 1;
                 }
             }
+            Err(e) => {
+                state.log_output = format!("Error loading JSONL: {}", e);
+            }
         }
     } else {
+        // Fallback to ASCII
         if let Ok(content) = std::fs::read_to_string(path) {
             let tab = EditorTab::Ascii(path.to_path_buf(), content, false);
             if let Some(pos) = state.open_tabs.iter().position(|t| match t {
@@ -1950,6 +1950,42 @@ fn show_pso_result_tab(ui: &mut egui::Ui, viz: &PsoVizData) {
                         ui.end_row();
                     }
                 });
+                
+                ui.add_space(10.0);
+                ui.label(egui::RichText::new("Geotechnical Parameters").strong());
+                ui.add_space(5.0);
+                
+                let mut best_vs30: Option<f64> = None;
+                let mut best_h800: Option<f64> = None;
+                let mut best_z1: Option<f64> = None;
+                let mut best_z2_5: Option<f64> = None;
+                
+                if best_vs30.is_none() || best_h800.is_none() || best_z1.is_none() || best_z2_5.is_none() {
+                    let mut z = vec![0.0];
+                    let mut vs = Vec::new();
+                    let mut sum_h = 0.0;
+                    for layer in &result.best_model.layers {
+                        if layer.thickness > 0.0 {
+                            sum_h += layer.thickness;
+                            z.push(sum_h);
+                        } else {
+                            z.push(sum_h + 10.0);
+                        }
+                        vs.push(layer.vs);
+                    }
+                    if let Some(&last) = vs.last() {
+                        vs.push(last);
+                    }
+                    if best_vs30.is_none() { best_vs30 = Some(crate::core::rjmcmc_stats::calc_vs30(&z, &vs)); }
+                    if best_h800.is_none() { best_h800 = Some(crate::core::rjmcmc_stats::calc_depth_for_vs(&z, &vs, 800.0)); }
+                    if best_z1.is_none() { best_z1 = Some(crate::core::rjmcmc_stats::calc_depth_for_vs(&z, &vs, 1000.0)); }
+                    if best_z2_5.is_none() { best_z2_5 = Some(crate::core::rjmcmc_stats::calc_depth_for_vs(&z, &vs, 2500.0)); }
+                }
+                
+                ui.label(format!("Vs30: {:.2} m/s", best_vs30.unwrap_or(0.0)));
+                ui.label(format!("H800: {:.2} m", best_h800.unwrap_or(0.0)));
+                ui.label(format!("Z1.0: {:.2} m", best_z1.unwrap_or(0.0)));
+                ui.label(format!("Z2.5: {:.2} m", best_z2_5.unwrap_or(0.0)));
             });
             
             ui.end_row();
@@ -2156,11 +2192,44 @@ fn show_visualization_tab(ui: &mut egui::Ui, viz: &VisualizerData) {
         
         ui.add_space(10.0);
         ui.group(|ui| {
-            ui.heading("Geotechnical Parameters Summary");
+            ui.heading("Geotechnical Parameters Summary (Posterior)");
             ui.label(format!("Vs30: {:.2} m/s (Range: {:.2} - {:.2})", viz.vs30_mean, viz.vs30_min, viz.vs30_max));
             ui.label(format!("H800: {:.2} m (Range: {:.2} - {:.2})", viz.h800_mean, viz.h800_min, viz.h800_max));
             ui.label(format!("Z1.0: {:.2} m (Range: {:.2} - {:.2})", viz.z1_mean, viz.z1_min, viz.z1_max));
             ui.label(format!("Z2.5: {:.2} m (Range: {:.2} - {:.2})", viz.z2_5_mean, viz.z2_5_min, viz.z2_5_max));
+            
+            if let Some(best) = &viz.best_sample {
+                ui.add_space(8.0);
+                ui.heading("Best Model Geotechnical Parameters");
+                let mut best_vs30 = best.vs30;
+                let mut best_h800 = best.h800;
+                let mut best_z1 = best.z1_0;
+                let mut best_z2_5 = best.z2_5;
+                
+                // Fallback: Compute if not present in JSON
+                if best_vs30.is_none() || best_h800.is_none() || best_z1.is_none() || best_z2_5.is_none() {
+                    let mut z = vec![0.0];
+                    let mut vs = Vec::new();
+                    let mut sum_h = 0.0;
+                    for i in 0..best.h.len() {
+                        sum_h += best.h[i];
+                        z.push(sum_h);
+                        vs.push(best.vs[i]);
+                    }
+                    if let Some(&last) = best.vs.last() {
+                        vs.push(last);
+                    }
+                    if best_vs30.is_none() { best_vs30 = Some(crate::core::rjmcmc_stats::calc_vs30(&z, &vs)); }
+                    if best_h800.is_none() { best_h800 = Some(crate::core::rjmcmc_stats::calc_depth_for_vs(&z, &vs, 800.0)); }
+                    if best_z1.is_none() { best_z1 = Some(crate::core::rjmcmc_stats::calc_depth_for_vs(&z, &vs, 1000.0)); }
+                    if best_z2_5.is_none() { best_z2_5 = Some(crate::core::rjmcmc_stats::calc_depth_for_vs(&z, &vs, 2500.0)); }
+                }
+                
+                ui.label(format!("Vs30: {:.2} m/s", best_vs30.unwrap_or(0.0)));
+                ui.label(format!("H800: {:.2} m", best_h800.unwrap_or(0.0)));
+                ui.label(format!("Z1.0: {:.2} m", best_z1.unwrap_or(0.0)));
+                ui.label(format!("Z2.5: {:.2} m", best_z2_5.unwrap_or(0.0)));
+            }
         });
     });
 }

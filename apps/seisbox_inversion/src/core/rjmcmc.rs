@@ -67,6 +67,15 @@ pub struct RjmcmcSample {
     pub vs: Vec<f64>,
     pub h: Vec<f64>,
     pub h_syn: Vec<f64>,
+    
+    #[serde(default, alias="Vs30", alias="vs30", alias="VS30")]
+    pub vs30: Option<f64>,
+    #[serde(default, alias="H800", alias="h800", alias="z800", alias="Z800")]
+    pub h800: Option<f64>,
+    #[serde(default, alias="Z1.0", alias="z1.0", alias="z1_0", alias="Z1000", alias="z1000")]
+    pub z1_0: Option<f64>,
+    #[serde(default, alias="Z2.5", alias="z2.5", alias="z2_5", alias="Z2500", alias="z2500")]
+    pub z2_5: Option<f64>,
 }
 
 pub struct Model {
@@ -475,6 +484,11 @@ pub fn run_inversion(cfg: RjmcmcConfig, tx: Sender<String>) {
         }
     };
     
+    // Write the inversion configuration as the first line in JSONL
+    if let Ok(cfg_json) = serde_json::to_string(&cfg) {
+        let _ = writeln!(out_file, "{{\"config\": {}}}", cfg_json);
+    }
+    
     let _ = tx.send("Starting MCMC iterations...".to_string());
     
     for i in 1..=cfg.n_iter {
@@ -515,6 +529,26 @@ pub fn run_inversion(cfg: RjmcmcConfig, tx: Sender<String>) {
         
         if i > cfg.burnin && i % cfg.thin == 0 {
             cost_history.push(rmse);
+            let mut z_arr = vec![0.0];
+            let mut sum_h = 0.0;
+            for &thickness in &current_model.h {
+                sum_h += thickness;
+                z_arr.push(sum_h);
+            }
+            z_arr.push(sum_h + 10.0);
+            
+            let mut vs_arr = current_model.vs.clone();
+            if vs_arr.len() < z_arr.len() {
+                if let Some(&last) = vs_arr.last() {
+                    vs_arr.push(last);
+                }
+            }
+            
+            let vs30 = crate::core::rjmcmc_stats::calc_vs30(&z_arr, &vs_arr);
+            let h800 = crate::core::rjmcmc_stats::calc_depth_for_vs(&z_arr, &vs_arr, 800.0);
+            let z1_0 = crate::core::rjmcmc_stats::calc_depth_for_vs(&z_arr, &vs_arr, 1000.0);
+            let z2_5 = crate::core::rjmcmc_stats::calc_depth_for_vs(&z_arr, &vs_arr, 2500.0);
+
             let sample = RjmcmcSample {
                 iter: i,
                 n_layers: current_model.vs.len(),
@@ -523,6 +557,10 @@ pub fn run_inversion(cfg: RjmcmcConfig, tx: Sender<String>) {
                 vs: current_model.vs.clone(),
                 h: current_model.h.clone(),
                 h_syn: current_syn.clone(),
+                vs30: Some(vs30),
+                h800: Some(h800),
+                z1_0: Some(z1_0),
+                z2_5: Some(z2_5),
             };
             let json = serde_json::to_string(&sample).unwrap();
             let _ = writeln!(out_file, "{}", json);

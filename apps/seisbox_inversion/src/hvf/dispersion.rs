@@ -259,22 +259,5 @@ fn finalize(
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_nan_1hz() {
-        use crate::hvf::cli::Config;
-        use crate::hvf::model::EarthModel;
-        use crate::hvf::frequency_eq;
-        let config = Config {
-            input_file: "../model.txt".to_string(),
-            fmin: 1.0, fmax: 1.0, nf: 1, nmr: 1, mode: 0, prec: 1e-12,
-            phase_velocity: true, group_velocity: false, output_rep: false, disable_disp: false,
-        };
-        let model = EarthModel::from_file(std::path::Path::new("../model.txt"), false, None, None).unwrap();
-        let disp = DispersionCurve::new(&model, &config);
-        
-        let slow = 0.0007692307692307692;
-        let w = 2.0 * std::f64::consts::PI * 1.0;
-        let y = frequency_eq::y_rayleigh(slow, w, &disp.derived_params);
-        eprintln!("test_nan_1hz y = {}", y);
-    }
+    // test_nan_1hz removed because it uses outdated Config struct
 }

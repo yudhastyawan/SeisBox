@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgrey?logo=apple" />
   <img src="https://img.shields.io/badge/language-Rust-orange?logo=rust" />
   <img src="https://img.shields.io/badge/license-Non--Commercial-blue" />
-  <img src="https://img.shields.io/badge/version-0.1.1-green" />
+  <img src="https://img.shields.io/badge/version-0.1.2-green" />
   <img src="https://img.shields.io/github/downloads/yudhastyawan/SeisBox/total?color=blueviolet" alt="Downloads" />
 </p>
 
@@ -44,7 +44,7 @@
 
 - **Operating System:** macOS 10.11 (El Capitan) or later / Windows 10 or later
 - **Architecture:** Apple Silicon (M1/M2/M3/M4), Intel x86_64, or Windows x64
-- **Storage:** ~10 MB for the application
+- **Storage:** <100 MB for the application
 
 ---
 

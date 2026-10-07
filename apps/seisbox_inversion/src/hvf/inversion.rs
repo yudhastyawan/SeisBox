@@ -39,6 +39,15 @@ pub struct HistoryEntry {
     pub cost: f64,
     pub model: EarthModel,
     pub hvsr: Vec<f64>,
+    
+    #[serde(default, alias="Vs30", alias="vs30", alias="VS30")]
+    pub vs30: Option<f64>,
+    #[serde(default, alias="H800", alias="h800", alias="z800", alias="Z800")]
+    pub h800: Option<f64>,
+    #[serde(default, alias="Z1.0", alias="z1.0", alias="z1_0", alias="Z1000", alias="z1000")]
+    pub z1_0: Option<f64>,
+    #[serde(default, alias="Z2.5", alias="z2.5", alias="z2_5", alias="Z2500", alias="z2500")]
+    pub z2_5: Option<f64>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +59,8 @@ pub struct InversionResult {
     pub freqs: Vec<f64>,
     pub estimated_hvsr: Vec<f64>,
     pub history: Vec<HistoryEntry>,
+    #[serde(default)]
+    pub config: Option<crate::hvf::cli::Config>,
 }
 
 pub fn read_obs_data(path: &Path, fmin: f64, fmax: f64) -> Result<(Vec<f64>, Vec<f64>), String> {
@@ -393,11 +404,36 @@ pub fn run_inversion(config: &Config, tx: Option<std::sync::mpsc::Sender<String>
         let hist_model = EarthModel { layers };
         let hist_hvsr = compute_hvsr_for_inversion(&hist_model, &obs_freqs, config);
         
+        let mut z_arr = vec![0.0];
+        let mut vs_arr = Vec::new();
+        let mut sum_h = 0.0;
+        for layer in &hist_model.layers {
+            vs_arr.push(layer.vs);
+            if layer.thickness > 0.0 {
+                sum_h += layer.thickness;
+                z_arr.push(sum_h);
+            } else {
+                z_arr.push(sum_h + 10.0);
+            }
+        }
+        if let Some(&last) = vs_arr.last() {
+            vs_arr.push(last);
+        }
+        
+        let vs30 = crate::core::rjmcmc_stats::calc_vs30(&z_arr, &vs_arr);
+        let h800 = crate::core::rjmcmc_stats::calc_depth_for_vs(&z_arr, &vs_arr, 800.0);
+        let z1_0 = crate::core::rjmcmc_stats::calc_depth_for_vs(&z_arr, &vs_arr, 1000.0);
+        let z2_5 = crate::core::rjmcmc_stats::calc_depth_for_vs(&z_arr, &vs_arr, 2500.0);
+
         history_entries.push(HistoryEntry {
             iter: imp.iter,
             cost: imp.cost,
             model: hist_model,
             hvsr: hist_hvsr,
+            vs30: Some(vs30),
+            h800: Some(h800),
+            z1_0: Some(z1_0),
+            z2_5: Some(z2_5),
         });
     }
 
@@ -408,6 +444,7 @@ pub fn run_inversion(config: &Config, tx: Option<std::sync::mpsc::Sender<String>
         freqs: obs_freqs.clone(),
         estimated_hvsr: est_hvsr,
         history: history_entries,
+        config: Some(config.clone()),
     };
 
     if let Some(ref plot_dir) = config.plot_dir {
@@ -445,4 +482,19 @@ pub fn run_inversion(config: &Config, tx: Option<std::sync::mpsc::Sender<String>
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+    
+    #[test]
+    fn test_parse_jsonl() {
+        let content = fs::read_to_string("../../test_files/output.jsonl").unwrap();
+        match serde_json::from_str::<InversionResult>(&content) {
+            Ok(_) => println!("Parsed OK"),
+            Err(e) => panic!("Error parsing: {}", e),
+        }
+    }
 }

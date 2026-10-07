@@ -56,7 +56,7 @@ echo.
 
 :: ---- Configuration ----
 set PRODUCT_NAME=SeisBox
-set PRODUCT_VERSION=0.1.1
+set PRODUCT_VERSION=0.1.2
 set MANUFACTURER=Yudha Styawan - Geophysical Engineering, Institut Teknologi Sumatera
 set UPGRADE_GUID=7B2E8F4A-1C3D-4E5F-A6B7-8C9D0E1F2A3B
 set WXS_FILE=seisbox_installer.wxs
